@@ -7,6 +7,7 @@ interface SectionData {
   readonly id: LandingSectionId;
   readonly labels: Record<LandingLocaleCode, string>;
   readonly hints: Record<LandingLocaleCode, string>;
+  readonly icon: string;
 }
 
 interface CategoryData {
@@ -26,6 +27,7 @@ const SECTION_DATA: readonly SectionData[] = [
       es: 'Explora pictogramas organizados por temas',
       en: 'Browse pictograms organised by theme',
     },
+    icon: '🏷️',
   },
   {
     id: 'favorites',
@@ -37,6 +39,7 @@ const SECTION_DATA: readonly SectionData[] = [
       es: 'Accede rápidamente a tus pictogramas guardados',
       en: 'Reach your saved pictograms right away',
     },
+    icon: '⭐',
   },
   {
     id: 'phrases',
@@ -48,6 +51,7 @@ const SECTION_DATA: readonly SectionData[] = [
       es: 'Encuentra frases útiles preparadas para ti',
       en: 'Find ready-made helpful phrases',
     },
+    icon: '💬',
   },
 ];
 
@@ -128,7 +132,13 @@ const CATEGORY_DATA: readonly CategoryData[] = [
 
 export function buildLandingSections(): readonly LandingMenuSectionEntity[] {
   return SECTION_DATA.map(
-    (section) => new LandingMenuSectionEntity(section.id, section.labels, section.hints),
+    (section) =>
+      new LandingMenuSectionEntity(
+        section.id,
+        section.labels,
+        section.hints,
+        section.icon,
+      ),
   );
 }
 

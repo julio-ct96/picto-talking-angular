@@ -1,8 +1,6 @@
 <aside
   [class.c-landing-aside--collapsed]="menuCollapsed()"
-  [attr.aria-label]="
-    locale() === 'en' ? 'Landing sections' : 'Secciones de la landing'
-  "
+  [attr.aria-label]="locale() === 'en' ? 'Landing sections' : 'Secciones de la landing'"
   id="landing-menu"
   class="c-landing-aside"
   role="navigation"
@@ -37,17 +35,24 @@
       <li class="c-landing-aside__item">
         <button
           [class.c-button--active]="section.id === activeSectionId()"
+          [class.c-landing-aside__section-button--collapsed]="menuCollapsed()"
           [attr.aria-pressed]="section.id === activeSectionId()"
-          [attr.aria-describedby]="'section-hint-' + section.id"
+          [attr.aria-describedby]="menuCollapsed() ? null : 'section-hint-' + section.id"
+          [attr.aria-label]="menuCollapsed() ? section.label : null"
           (click)="onSelectSection(section.id)"
           type="button"
-          class="c-button c-button--outlined c-button--full c-button--align-start"
+          class="c-button c-button--outlined c-button--full c-button--align-start c-landing-aside__section-button"
         >
+          <span class="c-landing-aside__section-icon" aria-hidden="true">{{
+            section.icon
+          }}</span>
           <span class="c-landing-aside__label">{{ section.label }}</span>
         </button>
-        <p id="{{ 'section-hint-' + section.id }}" class="c-landing-aside__hint">
-          {{ section.hint }}
-        </p>
+        @if (!menuCollapsed()) {
+          <p id="{{ 'section-hint-' + section.id }}" class="c-landing-aside__hint">
+            {{ section.hint }}
+          </p>
+        }
       </li>
     }
   </ul>

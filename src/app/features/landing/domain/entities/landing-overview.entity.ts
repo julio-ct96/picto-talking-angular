@@ -11,6 +11,7 @@ export interface LandingOverviewSnapshot {
     readonly id: LandingSectionId;
     readonly label: string;
     readonly hint: string;
+    readonly icon: string;
   }[];
   readonly categories: readonly LandingCategorySnapshot[];
 }
@@ -27,6 +28,7 @@ export class LandingOverviewEntity {
         id: section.id,
         label: section.label(locale),
         hint: section.hint(locale),
+        icon: section.icon,
       })),
       categories: this.categories.map((category) => category.toSnapshot(locale)),
     };

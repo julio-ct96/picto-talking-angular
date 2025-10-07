@@ -21,8 +21,8 @@
   position: relative;
 
   &--collapsed {
-    inline-size: 3.5rem;
-    min-inline-size: 3.5rem;
+    inline-size: 4rem;
+    min-inline-size: 4rem;
     padding-inline: fn.token('spacing', 'xs');
   }
 
@@ -69,8 +69,8 @@
   }
 
   &--collapsed &__list {
-    opacity: 0;
-    visibility: hidden;
+    opacity: 1;
+    visibility: visible;
   }
 
   &__item {
@@ -79,9 +79,38 @@
     gap: fn.token('spacing', 'xxs');
   }
 
+  &__section-button {
+    display: flex;
+    align-items: center;
+    gap: fn.token('spacing', 'xs');
+    transition: all fn.token('transitions', 'quick') ease;
+
+    &--collapsed {
+      justify-content: center;
+      padding-inline: fn.token('spacing', 'xs');
+    }
+  }
+
+  &__section-icon {
+    font-size: fn.token('typography', 'sizes', 'xl');
+    line-height: 1;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__label {
     @include mixins.text-style('md', 'medium');
     white-space: nowrap;
+    opacity: 1;
+    transition: opacity fn.token('transitions', 'quick') ease;
+  }
+
+  &--collapsed &__label {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
   }
 
   &__hint {
@@ -109,7 +138,9 @@
     transition: none;
 
     &__title,
-    &__list {
+    &__list,
+    &__label,
+    &__section-button {
       transition: none;
     }
   }

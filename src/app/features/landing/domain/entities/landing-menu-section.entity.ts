@@ -9,6 +9,7 @@ export class LandingMenuSectionEntity {
     readonly id: LandingSectionId,
     private readonly labelByLocale: Readonly<Record<LandingLocaleCode, string>>,
     private readonly hintByLocale: Readonly<Record<LandingLocaleCode, string>>,
+    readonly icon: string,
   ) {}
 
   label(locale: LandingLocaleCode): string {

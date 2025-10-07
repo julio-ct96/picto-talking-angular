@@ -35,6 +35,7 @@ export interface LandingSectionView {
   readonly id: LandingSectionId;
   readonly label: string;
   readonly hint: string;
+  readonly icon: string;
 }
 
 export interface LandingCategoryView {
