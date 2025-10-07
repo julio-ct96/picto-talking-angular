@@ -9,8 +9,6 @@
     {{ state.liveAnnouncement }}
   </div>
 
-  <h1 id="landing-title" class="p-landing__title">Pictotalking</h1>
-
   <header class="p-landing__header">
     @if (state.menuCollapsed) {
       <button
@@ -20,11 +18,7 @@
         class="c-button c-button--ghost p-landing__menu-toggle"
         aria-controls="landing-menu"
       >
-        {{
-          state.locale === 'en'
-            ? 'Open navigation menu'
-            : 'Abrir menú de navegación'
-        }}
+        {{ state.locale === 'en' ? 'Open navigation menu' : 'Abrir menú de navegación' }}
       </button>
     }
   </header>
@@ -64,6 +58,8 @@
     }
 
     <div class="p-landing__layout">
+      <h1 id="landing-title" class="p-landing__title">Pictotalking</h1>
+
       <pic-landing-aside
         [sections]="state.sections"
         [locale]="state.locale"
