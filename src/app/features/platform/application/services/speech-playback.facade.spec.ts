@@ -65,9 +65,10 @@ class MockFeatureFlagPort implements FeatureFlagPort {
 
 class MockSpeechTelemetry implements SpeechTelemetryPort {
   readonly warnings: Array<{ message: string; context?: Record<string, unknown> }> = [];
+  readonly events: Array<{ name: string; payload?: Record<string, unknown> }> = [];
 
-  trackEvent(): void {
-    // noop for tests
+  trackEvent(eventName: string, payload?: Record<string, unknown>): void {
+    this.events.push({ name: eventName, payload });
   }
 
   logWarning(message: string, context?: Record<string, unknown>): void {
@@ -163,5 +164,33 @@ describe('SpeechPlaybackFacade', () => {
       (entry) => entry.message === 'speech-playback-fallback-triggered',
     );
     expect(warning).toBeDefined();
+    const failureEvent = telemetry.events.find((entry) => entry.name === 'speech.playback.failed');
+    expect(failureEvent).toBeDefined();
+  });
+
+  it('publishes issue when speech synthesis is unavailable', async () => {
+    spyOn(engine, 'supportsSpeechSynthesis').and.returnValue(false);
+
+    await facade.requestSpeech({ text: 'Test', locale: 'en' });
+    await flushAsync();
+
+    const issue = facade.lastIssue();
+    expect(issue?.type).toBe('unavailable');
+    expect(issue?.reason).toBe('engine-not-supported');
+    const event = telemetry.events.find((entry) => entry.name === 'speech.unavailable');
+    expect(event?.payload?.reason).toBe('engine-not-supported');
+  });
+
+  it('reports playback failure issue when engine errors', async () => {
+    await facade.requestSpeech({ text: 'Error', locale: 'en' });
+    await flushAsync();
+
+    engine.resolveNext({ success: false, fallbackUsed: true });
+    await flushAsync();
+
+    const issue = facade.lastIssue();
+    expect(issue?.type).toBe('failed');
+    expect(issue?.reason).toBe('playback-error');
+  });
   });
 });

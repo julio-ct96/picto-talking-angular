@@ -1,0 +1,168 @@
+@let state = vm.state();
+
+<main
+  class="landing"
+  [class.landing--menu-collapsed]="state.menuCollapsed"
+  aria-labelledby="landing-title"
+>
+  <div class="landing__sr-live" aria-live="polite">
+    {{ state.liveAnnouncement }}
+  </div>
+
+  <header class="landing__header">
+    <h1 id="landing-title" class="landing__title">Pictotalking</h1>
+    <p class="landing__intro">
+      {{
+        state.locale === 'en'
+          ? 'Discover pictograms and voice feedback from the very first screen.'
+          : 'Descubre pictogramas y voz de apoyo desde el primer momento.'
+      }}
+    </p>
+    <button
+      type="button"
+      class="landing__menu-toggle"
+      (click)="onToggleMenu()"
+      [attr.aria-expanded]="!state.menuCollapsed"
+      aria-controls="landing-menu"
+    >
+      {{
+        state.locale === 'en'
+          ? state.menuCollapsed
+            ? 'Open navigation menu'
+            : 'Collapse navigation menu'
+          : state.menuCollapsed
+            ? 'Abrir menú de navegación'
+            : 'Colapsar menú de navegación'
+      }}
+    </button>
+  </header>
+
+  @if (!state.featureEnabled) {
+    <section class="landing__fallback" role="status" aria-live="assertive">
+      <h2 class="landing__fallback-title">
+        {{
+          state.locale === 'en'
+            ? 'The new landing is not available yet'
+            : 'La nueva landing todavía no está disponible'
+        }}
+      </h2>
+      <p class="landing__fallback-message">
+        {{
+          state.locale === 'en'
+            ? 'You are viewing the legacy experience. Ask your coordinator to enable ff_ui_landing_base when you are ready.'
+            : 'Estás viendo la experiencia anterior. Solicita a tu coordinador activar ff_ui_landing_base cuando estéis listos.'
+        }}
+      </p>
+    </section>
+  } @else {
+    @if (state.speechBanner) {
+      <section class="landing__banner" role="alert" aria-live="assertive">
+        <div class="landing__banner-content">
+          <h2 class="landing__banner-title">{{ state.speechBanner.title }}</h2>
+          <p class="landing__banner-message">{{ state.speechBanner.description }}</p>
+        </div>
+        <button type="button" class="landing__banner-close" (click)="onDismissBanner()">
+          {{ state.locale === 'en' ? 'Close message' : 'Cerrar mensaje' }}
+        </button>
+      </section>
+    }
+
+    <div class="landing__layout">
+      <aside
+        id="landing-menu"
+        class="landing__menu"
+        role="navigation"
+        [class.landing__menu--collapsed]="state.menuCollapsed"
+        [attr.aria-label]="
+          state.locale === 'en' ? 'Landing sections' : 'Secciones de la landing'
+        "
+      >
+        <h2 class="landing__menu-title">
+          {{ state.locale === 'en' ? 'Sections' : 'Secciones' }}
+        </h2>
+        <ul class="landing__menu-list" role="list">
+          @for (section of state.sections; track section.id) {
+            <li class="landing__menu-item">
+              <button
+                type="button"
+                class="landing__menu-button"
+                [class.landing__menu-button--active]="
+                  section.id === state.activeSectionId
+                "
+                (click)="onSelectSection(section.id)"
+                [attr.aria-pressed]="section.id === state.activeSectionId"
+                [attr.aria-describedby]="'section-hint-' + section.id"
+              >
+                <span class="landing__menu-label">{{ section.label }}</span>
+              </button>
+              <p id="{{ 'section-hint-' + section.id }}" class="landing__menu-hint">
+                {{ section.hint }}
+              </p>
+            </li>
+          }
+        </ul>
+      </aside>
+
+      <section class="landing__content" aria-live="polite">
+        <h2 class="landing__content-title">
+          {{ state.locale === 'en' ? 'Explore categories' : 'Explora categorías' }}
+        </h2>
+
+        @if (state.loading) {
+          <div class="landing__skeleton-grid" aria-hidden="true">
+            @for (skeleton of [1, 2, 3, 4, 5, 6, 7, 8]; track skeleton) {
+              <div class="landing__skeleton-card"></div>
+            }
+          </div>
+        } @else {
+          @if (state.categories.length > 0) {
+            <ul class="landing__categories" role="list">
+              @for (category of state.categories; track category.id) {
+                <li class="landing__categories-item">
+                  <article class="category-card">
+                    <img
+                      ngOptimizedImage
+                      [ngSrc]="category.pictogramUrl"
+                      width="160"
+                      height="160"
+                      [attr.alt]="category.imageAlt"
+                      class="category-card__image"
+                    />
+                    <div class="category-card__body">
+                      <h3 class="category-card__title">{{ category.title }}</h3>
+                      <button
+                        type="button"
+                        class="category-card__speak"
+                        (click)="onCategoryActivate(category.id)"
+                        [attr.aria-label]="
+                          state.locale === 'en'
+                            ? 'Play ' + category.title
+                            : 'Reproducir ' + category.title
+                        "
+                      >
+                        <span aria-hidden="true" class="category-card__speak-icon"
+                          >🔊</span
+                        >
+                        <span class="category-card__speak-text">
+                          {{ state.locale === 'en' ? 'Play' : 'Reproducir' }}
+                        </span>
+                      </button>
+                    </div>
+                  </article>
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="landing__empty-state" role="status">
+              {{
+                state.locale === 'en'
+                  ? 'There are no categories to show right now.'
+                  : 'No hay categorías para mostrar en este momento.'
+              }}
+            </p>
+          }
+        }
+      </section>
+    </div>
+  }
+</main>

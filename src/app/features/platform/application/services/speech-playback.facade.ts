@@ -37,6 +37,17 @@ export interface SpeechFacadeState {
   readonly preferences: SpeechPreferencesEntity | null;
 }
 
+export type SpeechPlaybackIssueReason =
+  | 'feature-disabled'
+  | 'engine-not-supported'
+  | 'playback-error';
+
+export interface SpeechPlaybackIssue {
+  readonly type: 'unavailable' | 'failed';
+  readonly reason: SpeechPlaybackIssueReason;
+  readonly occurredAt: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SpeechPlaybackFacade {
   private static readonly FEATURE_FLAG_KEY = 'ff_speech_service';
@@ -57,6 +68,10 @@ export class SpeechPlaybackFacade {
   private readonly enabled: WritableSignal<boolean> = signal(
     this.featureFlags.isEnabled(SpeechPlaybackFacade.FEATURE_FLAG_KEY),
   );
+  private readonly speechSupported: WritableSignal<boolean> = signal(
+    this.engine.supportsSpeechSynthesis(),
+  );
+  private readonly issue: WritableSignal<SpeechPlaybackIssue | null> = signal(null);
 
   readonly queueSnapshot: Signal<readonly SpeechRequestSnapshot[]> = computed(() =>
     this.queue()
@@ -69,6 +84,8 @@ export class SpeechPlaybackFacade {
   readonly preferencesSnapshot: Signal<SpeechPreferencesEntity | null> = computed(() =>
     this.preferences(),
   );
+  readonly isSpeechSupported: Signal<boolean> = computed(() => this.speechSupported());
+  readonly lastIssue: Signal<SpeechPlaybackIssue | null> = computed(() => this.issue());
   readonly state: Signal<SpeechFacadeState> = computed(() => ({
     queue: this.queueSnapshot(),
     isPlaying: this.isPlaying(),
@@ -86,11 +103,18 @@ export class SpeechPlaybackFacade {
       this.telemetry.logWarning('speech-service-disabled', {
         featureFlag: SpeechPlaybackFacade.FEATURE_FLAG_KEY,
       });
+      this.publishIssue('unavailable', 'feature-disabled');
+      this.telemetry.trackEvent('speech.unavailable', { reason: 'feature-disabled' });
       return;
     }
 
-    if (!this.engine.supportsSpeechSynthesis()) {
+    const supported = this.engine.supportsSpeechSynthesis();
+    this.speechSupported.set(supported);
+
+    if (!supported) {
       this.telemetry.logWarning('speech-synthesis-not-supported');
+      this.publishIssue('unavailable', 'engine-not-supported');
+      this.telemetry.trackEvent('speech.unavailable', { reason: 'engine-not-supported' });
       return;
     }
 
@@ -118,6 +142,14 @@ export class SpeechPlaybackFacade {
     this.queue.set(SpeechQueueEntity.empty());
     this.cancelPlayback.execute();
     this.playing.set(false);
+  }
+
+  supportsSpeech(): boolean {
+    return this.speechSupported();
+  }
+
+  clearIssue(): void {
+    this.issue.set(null);
   }
 
   async setVoice(voiceId: string | null, locale: LocaleCode): Promise<void> {
@@ -168,6 +200,11 @@ export class SpeechPlaybackFacade {
 
   private async playRequest(request: SpeechRequestEntity): Promise<void> {
     try {
+      this.telemetry.trackEvent('speech.playback.started', {
+        locale: request.locale,
+        voiceId: request.voiceId,
+        textLength: request.text.length,
+      });
       const result: SpeechPlaybackResult = await this.engine.speak(request);
       if (!result.success) {
         this.telemetry.logWarning('speech-playback-fallback-triggered', {
@@ -175,14 +212,37 @@ export class SpeechPlaybackFacade {
           voiceId: request.voiceId,
           fallbackUsed: result.fallbackUsed,
         });
+        this.telemetry.trackEvent('speech.playback.failed', {
+          locale: request.locale,
+          voiceId: request.voiceId,
+          fallbackUsed: result.fallbackUsed,
+          textLength: request.text.length,
+        });
+        this.publishIssue('failed', 'playback-error');
       }
     } catch (error) {
+      const reason = this.describeError(error);
       this.telemetry.logWarning('speech-playback-error', {
         locale: request.locale,
         voiceId: request.voiceId,
-        reason: this.describeError(error),
+        reason,
       });
+      this.telemetry.trackEvent('speech.playback.failed', {
+        locale: request.locale,
+        voiceId: request.voiceId,
+        reason,
+        textLength: request.text.length,
+      });
+      this.publishIssue('failed', 'playback-error');
     }
+  }
+
+  private publishIssue(type: SpeechPlaybackIssue['type'], reason: SpeechPlaybackIssueReason): void {
+    this.issue.set({
+      type,
+      reason,
+      occurredAt: Date.now(),
+    });
   }
 
   private async ensurePreferences(locale?: LocaleCode): Promise<SpeechPreferencesEntity> {

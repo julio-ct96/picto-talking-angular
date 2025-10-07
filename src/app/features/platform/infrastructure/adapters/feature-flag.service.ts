@@ -9,6 +9,7 @@ export const FEATURE_FLAG_DEFAULTS = new InjectionToken<FeatureFlagDictionary>(
   {
     factory: (): FeatureFlagDictionary => ({
       ff_speech_service: true,
+      ff_ui_landing_base: true,
     }),
   },
 );
