@@ -11,13 +11,6 @@
 
   <header class="p-landing__header">
     <h1 id="landing-title" class="p-landing__title">Pictotalking</h1>
-    <p class="p-landing__intro">
-      {{
-        state.locale === 'en'
-          ? 'Discover pictograms and voice feedback from the very first screen.'
-          : 'Descubre pictogramas y voz de apoyo desde el primer momento.'
-      }}
-    </p>
     <button
       [attr.aria-expanded]="!state.menuCollapsed"
       (click)="onToggleMenu()"

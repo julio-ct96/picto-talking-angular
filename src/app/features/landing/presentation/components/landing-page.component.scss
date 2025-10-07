@@ -17,19 +17,12 @@
   &__header {
     display: flex;
     flex-direction: column;
-    gap: fn.token('spacing', 'md');
+    gap: fn.token('spacing', 'xs');
   }
 
   &__title {
-    @include mixins.text-style('display', 'bold', 'tight');
+    @include mixins.text-style('2xl', 'bold', 'tight');
     font-family: fn.token('typography', 'families', 'display');
-    margin: 0;
-  }
-
-  &__intro {
-    @include mixins.text-style('lg');
-    color: fn.token('color', 'text', 'secondary');
-    max-inline-size: 60ch;
     margin: 0;
   }
 
