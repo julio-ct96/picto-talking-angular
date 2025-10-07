@@ -1,6 +1,13 @@
 @use '../abstracts/functions' as fn;
 @use '../abstracts/mixins' as mixins;
 
+:root {
+  --font-sans: 'Nunito', system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu',
+    'Cantarell', 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji',
+    'Segoe UI Emoji';
+  --font-ui: 'Baloo Da 2', cursive;
+}
+
 *,
 *::before,
 *::after {
@@ -41,4 +48,3 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
