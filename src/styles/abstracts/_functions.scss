@@ -1,0 +1,45 @@
+@use 'sass:map';
+@use 'sass:string';
+@use './variables' as *;
+
+@function token($collection, $keys...) {
+  $source: null;
+
+  @if $collection == 'color' or $collection == 'colors' {
+    $source: $colors;
+  } @else if $collection == 'type' or $collection == 'typography' {
+    $source: $typography;
+  } @else if $collection == 'space' or $collection == 'spacing' {
+    $source: $spacing;
+  } @else if $collection == 'radius' {
+    $source: $radius;
+  } @else if $collection == 'shadow' or $collection == 'shadows' {
+    $source: $shadows;
+  } @else if $collection == 'transition' or $collection == 'transitions' {
+    $source: $transitions;
+  }
+
+  @if $source == null {
+    @error 'Unknown token collection: #{string.inspect($collection)}';
+  }
+
+  $value: $source;
+
+  @each $key in $keys {
+    $value: map.get($value, $key);
+
+    @if $value == null {
+      @error 'Token not found: #{string.inspect($keys)} within #{string.inspect($collection)}';
+    }
+  }
+
+  @return $value;
+}
+
+@function color-token($group, $tone) {
+  @return token('color', $group, $tone);
+}
+
+@function type-token($group, $name) {
+  @return token('typography', $group, $name);
+}

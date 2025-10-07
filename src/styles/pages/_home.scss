@@ -1,0 +1,36 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mixins;
+
+.p-home {
+  padding-block: fn.token('spacing', 'xl');
+
+  &__hero {
+    display: grid;
+    gap: fn.token('spacing', 'xl');
+    text-align: center;
+    background: linear-gradient(145deg, rgba(fn.token('color', 'accent', '050'), 0.9), rgba(fn.token('color', 'accent', '400'), 0.1));
+    border-radius: fn.token('radius', 'lg');
+    padding: fn.token('spacing', 'xl');
+    box-shadow: fn.token('shadow', 'soft');
+  }
+
+  &__heading {
+    @include mixins.text-style('display', 'bold', 'tight');
+    color: fn.token('color', 'accent', '600');
+  }
+
+  &__lead {
+    @include mixins.text-style('lg');
+    color: fn.token('color', 'text', 'secondary');
+    margin-inline: auto;
+    max-width: 40ch;
+  }
+
+  &__cta {
+    display: flex;
+    gap: fn.token('spacing', 'sm');
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}
+

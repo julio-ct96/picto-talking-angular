@@ -1,0 +1,47 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mixins;
+
+.c-card {
+  background-color: fn.token('color', 'background', 'surface');
+  border-radius: fn.token('radius', 'lg');
+  padding: fn.token('spacing', 'lg');
+  box-shadow: 0 1px 3px rgba(#2f1305, 0.12);
+  color: fn.token('color', 'text', 'primary');
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: fn.token('spacing', 'xs');
+    margin-bottom: fn.token('spacing', 'md');
+  }
+
+  &__title {
+    @include mixins.text-style('lg', 'bold', 'tight');
+    margin: 0;
+  }
+
+  &__subtitle {
+    @include mixins.text-style('sm');
+    color: fn.token('color', 'text', 'muted');
+  }
+
+  &__body {
+    @include mixins.text-style('md');
+  }
+
+  &__actions {
+    margin-top: fn.token('spacing', 'lg');
+    display: flex;
+    gap: fn.token('spacing', 'sm');
+    flex-wrap: wrap;
+  }
+
+  &--elevated {
+    box-shadow: fn.token('shadow', 'soft');
+  }
+
+  &--accent {
+    border: 2px solid rgba(fn.token('color', 'accent', '500'), 0.2);
+  }
+}
+

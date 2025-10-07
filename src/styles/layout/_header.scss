@@ -1,0 +1,32 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mixins;
+
+.l-header {
+  background-color: fn.token('color', 'background', 'surface');
+  box-shadow: 0 2px 12px rgba(#2f1305, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 4.5rem;
+    padding-inline: fn.token('spacing', 'lg');
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: fn.token('spacing', 'xs');
+    font-family: fn.token('typography', 'families', 'display');
+    @include mixins.text-style('lg', 'bold');
+  }
+
+  &__actions {
+    display: flex;
+    gap: fn.token('spacing', 'sm');
+  }
+}
+

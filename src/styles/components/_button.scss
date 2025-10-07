@@ -1,0 +1,51 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mixins;
+
+.c-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: fn.token('spacing', 'xs');
+  padding: fn.token('spacing', 'sm') fn.token('spacing', 'lg');
+  border: 0;
+  border-radius: fn.token('radius', 'md');
+  cursor: pointer;
+  font-weight: fn.token('typography', 'weights', 'medium');
+  text-decoration: none;
+  background-color: fn.token('color', 'accent', '500');
+  color: fn.token('color', 'text', 'inverse');
+  @include mixins.interactive-state(fn.token('color', 'accent', '500'));
+
+  &__icon {
+    display: inline-flex;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: fn.token('color', 'accent', '500');
+    box-shadow: inset 0 0 0 2px rgba(fn.token('color', 'accent', '500'), 0.6);
+
+    @include mixins.interactive-state(fn.token('color', 'accent', '400'), 3%);
+  }
+
+  &--danger {
+    background-color: fn.token('color', 'support', 'danger');
+    @include mixins.interactive-state(fn.token('color', 'support', 'danger'), 5%);
+  }
+
+  &--disabled,
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+    background-color: fn.token('color', 'accent', '050');
+    color: fn.token('color', 'text', 'muted');
+  }
+
+  &--full {
+    width: 100%;
+  }
+}
+

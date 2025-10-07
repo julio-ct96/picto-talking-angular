@@ -1,0 +1,26 @@
+:root {
+  --font-sans: 'Nunito', system-ui, -apple-system, 'Segoe UI', 'Roboto', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-ui: 'Baloo Da 2', cursive;
+
+  --color-background-base: #fff3e0;
+  --color-background-surface: #ffe8cc;
+  --color-background-overlay: #ffd7aa;
+
+  --color-text-primary: #2f1305;
+  --color-text-secondary: #5e3c28;
+  --color-text-muted: rgba(94, 60, 40, 0.7);
+  --color-text-inverse: #ffffff;
+
+  --color-accent-050: #fff8ef;
+  --color-accent-400: #8c3a10;
+  --color-accent-500: #722f0d;
+  --color-accent-600: #5c250a;
+
+  --color-success-500: #2f8f83;
+  --color-warning-500: #c75c08;
+  --color-danger-500: #b9383a;
+  --color-info-500: #1565c0;
+
+  --shadow-soft: 0 6px 16px rgba(47, 19, 5, 0.18);
+  --shadow-focus: 0 0 0 3px rgba(114, 47, 13, 0.35);
+}

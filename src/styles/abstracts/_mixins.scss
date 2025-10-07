@@ -1,0 +1,55 @@
+@use 'sass:color';
+@use './functions' as fn;
+
+@mixin font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@mixin focus-ring($shadow: null) {
+  $default-shadow: fn.token('shadow', 'focus');
+  outline: none;
+  box-shadow: if($shadow != null, $shadow, $default-shadow);
+}
+
+@mixin interactive-state($base-color, $darken-by: 6%) {
+  transition: box-shadow fn.token('transitions', 'standard') ease, background-color fn.token('transitions', 'quick') ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: color.adjust($base-color, $lightness: -$darken-by);
+    box-shadow: fn.token('shadow', 'soft');
+  }
+
+  &:active {
+    background-color: color.adjust($base-color, $lightness: -($darken-by * 1.4));
+    transform: translateY(1px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+@mixin text-style($size-key, $weight-key: 'regular', $line-height-key: 'normal') {
+  font-size: fn.token('typography', 'sizes', $size-key);
+  font-weight: fn.token('typography', 'weights', $weight-key);
+  line-height: fn.token('typography', 'line-heights', $line-height-key);
+}
+
+@mixin clamp-container {
+  margin-inline: auto;
+  width: min(100% - fn.token('spacing', 'lg') * 2, 72rem);
+}
+
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

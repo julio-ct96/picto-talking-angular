@@ -1,0 +1,44 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mixins;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: fn.token('typography', 'families', 'sans');
+  color: fn.token('color', 'text', 'primary');
+  background-color: fn.token('color', 'background', 'base');
+  line-height: fn.token('typography', 'line-heights', 'normal');
+  @include mixins.font-smoothing;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+

@@ -1,0 +1,23 @@
+@use '../abstracts/functions' as fn;
+
+:root {
+  --space-xxs: #{fn.token('spacing', 'xxs')};
+  --space-xs: #{fn.token('spacing', 'xs')};
+  --space-sm: #{fn.token('spacing', 'sm')};
+  --space-md: #{fn.token('spacing', 'md')};
+  --space-lg: #{fn.token('spacing', 'lg')};
+  --space-xl: #{fn.token('spacing', 'xl')};
+}
+
+.u-margin-inline-auto {
+  margin-inline: auto !important;
+}
+
+.u-pad-lg {
+  padding: var(--space-lg) !important;
+}
+
+.u-gap-md {
+  gap: var(--space-md) !important;
+}
+

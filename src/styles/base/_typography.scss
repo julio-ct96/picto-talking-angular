@@ -1,0 +1,39 @@
+@use '../abstracts/functions' as fn;
+@use '../abstracts/mixins' as mixins;
+
+body {
+  font-size: fn.token('typography', 'sizes', 'md');
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: fn.token('typography', 'families', 'display');
+  color: fn.token('color', 'text', 'primary');
+  margin: 0 0 fn.token('spacing', 'md');
+}
+
+h1 {
+  @include mixins.text-style('display', 'bold', 'tight');
+}
+
+h2 {
+  @include mixins.text-style('xl', 'bold', 'tight');
+}
+
+h3 {
+  @include mixins.text-style('lg', 'medium', 'tight');
+}
+
+p {
+  margin: 0 0 fn.token('spacing', 'md');
+  color: fn.token('color', 'text', 'secondary');
+}
+
+.u-text-muted {
+  color: fn.token('color', 'text', 'muted');
+}
+
