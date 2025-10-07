@@ -1,8 +1,8 @@
 @let state = vm.state();
 
 <main
-  class="p-landing"
   [class.p-landing--menu-collapsed]="state.menuCollapsed"
+  class="p-landing"
   aria-labelledby="landing-title"
 >
   <div class="p-landing__sr-live" aria-live="polite">
@@ -19,10 +19,10 @@
       }}
     </p>
     <button
+      [attr.aria-expanded]="!state.menuCollapsed"
+      (click)="onToggleMenu()"
       type="button"
       class="c-button c-button--ghost p-landing__menu-toggle"
-      (click)="onToggleMenu()"
-      [attr.aria-expanded]="!state.menuCollapsed"
       aria-controls="landing-menu"
     >
       {{
@@ -62,9 +62,9 @@
           <p class="p-landing__banner-message">{{ state.speechBanner.description }}</p>
         </div>
         <button
+          (click)="onDismissBanner()"
           type="button"
           class="c-button c-button--ghost p-landing__banner-close"
-          (click)="onDismissBanner()"
         >
           {{ state.locale === 'en' ? 'Close message' : 'Cerrar mensaje' }}
         </button>
@@ -73,13 +73,13 @@
 
     <div class="p-landing__layout">
       <aside
-        id="landing-menu"
-        class="p-landing__menu"
-        role="navigation"
         [class.p-landing__menu--collapsed]="state.menuCollapsed"
         [attr.aria-label]="
           state.locale === 'en' ? 'Landing sections' : 'Secciones de la landing'
         "
+        id="landing-menu"
+        class="p-landing__menu"
+        role="navigation"
       >
         <h2 class="p-landing__menu-title">
           {{ state.locale === 'en' ? 'Sections' : 'Secciones' }}
@@ -88,14 +88,14 @@
           @for (section of state.sections; track section.id) {
             <li class="p-landing__menu-item">
               <button
-                type="button"
-                class="c-button c-button--ghost p-landing__menu-button"
                 [class.p-landing__menu-button--active]="
                   section.id === state.activeSectionId
                 "
-                (click)="onSelectSection(section.id)"
                 [attr.aria-pressed]="section.id === state.activeSectionId"
                 [attr.aria-describedby]="'section-hint-' + section.id"
+                (click)="onSelectSection(section.id)"
+                type="button"
+                class="c-button c-button--ghost p-landing__menu-button"
               >
                 <span class="p-landing__menu-label">{{ section.label }}</span>
               </button>
@@ -125,24 +125,24 @@
                 <li class="p-landing__categories-item">
                   <article class="c-card p-landing__category-card">
                     <img
-                      ngOptimizedImage
                       [ngSrc]="category.pictogramUrl"
+                      [attr.alt]="category.imageAlt"
+                      ngOptimizedImage
                       width="160"
                       height="160"
-                      [attr.alt]="category.imageAlt"
                       class="p-landing__category-image"
                     />
                     <div class="p-landing__category-body">
                       <h3 class="p-landing__category-title">{{ category.title }}</h3>
                       <button
-                        type="button"
-                        class="c-button p-landing__category-action"
-                        (click)="onCategoryActivate(category.id)"
                         [attr.aria-label]="
                           state.locale === 'en'
                             ? 'Play ' + category.title
                             : 'Reproducir ' + category.title
                         "
+                        (click)="onCategoryActivate(category.id)"
+                        type="button"
+                        class="c-button p-landing__category-action"
                       >
                         <span aria-hidden="true" class="p-landing__category-action-icon"
                           >🔊</span
