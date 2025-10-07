@@ -1,7 +1,7 @@
 @use '../abstracts/functions' as fn;
 
 .l-app-shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: radial-gradient(
       circle at 0 0,
       rgba(fn.token('color', 'accent', '050'), 0.9),
