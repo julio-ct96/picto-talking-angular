@@ -1,5 +1,5 @@
 export class ArasaacServiceError extends Error {
-  readonly cause?: unknown;
+  override readonly cause?: unknown;
   constructor(message: string, cause?: unknown) {
     super(message);
     this.name = 'ArasaacServiceError';
@@ -9,7 +9,10 @@ export class ArasaacServiceError extends Error {
 
 export class RateLimitExceededError extends ArasaacServiceError {
   readonly retryAfterSeconds: number | null;
-  constructor(message = 'ARASAAC rate limit exceeded.', options?: { retryAfterSeconds?: number | null; cause?: unknown }) {
+  constructor(
+    message = 'ARASAAC rate limit exceeded.',
+    options?: { retryAfterSeconds?: number | null; cause?: unknown },
+  ) {
     super(message, options?.cause);
     this.name = 'RateLimitExceededError';
     this.retryAfterSeconds = options?.retryAfterSeconds ?? null;

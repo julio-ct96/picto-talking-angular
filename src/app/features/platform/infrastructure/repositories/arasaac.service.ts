@@ -165,13 +165,17 @@ export class ArasaacService implements ArasaacRepository {
     return this.runWithResilience({
       cacheKey,
       call: async () => {
-        if (params.type === 'materials') {
+        if (this.isMaterialsParams(params)) {
           const data = await this.getNewMaterials(params);
           return data as NewItemsResult<TType>;
         }
 
-        const data = await this.getNewPictograms(params);
-        return data as NewItemsResult<TType>;
+        if (this.isPictogramsParams(params)) {
+          const data = await this.getNewPictograms(params);
+          return data as NewItemsResult<TType>;
+        }
+
+        throw new Error('Unsupported new items type');
       },
     });
   }
@@ -212,6 +216,18 @@ export class ArasaacService implements ArasaacRepository {
     const url = this.buildUrl(`/pictograms/${params.language}/new/${limit}`);
     const response = await this.httpGet<readonly PictogramDto[]>(url);
     return (response ?? []).map(mapPictogramDtoToEntity);
+  }
+
+  private isMaterialsParams(
+    params: GetNewItemsParams<GetNewItemsParams['type']>,
+  ): params is GetNewItemsParams<'materials'> {
+    return params.type === 'materials';
+  }
+
+  private isPictogramsParams(
+    params: GetNewItemsParams<GetNewItemsParams['type']>,
+  ): params is GetNewItemsParams<'pictograms'> {
+    return params.type === 'pictograms';
   }
 
   private async runWithResilience<T>(config: RequestConfig<T>): Promise<T> {
@@ -365,7 +381,7 @@ export class ArasaacService implements ArasaacRepository {
   }
 
   private buildHttpErrorMessage(error: HttpErrorResponse): string {
-    const status = error.status || '0';
+    const status = error.status !== undefined ? String(error.status) : '0';
     const statusText = error.statusText || 'Unknown error';
     return `ARASAAC HTTP error ${status}: ${statusText}`;
   }
