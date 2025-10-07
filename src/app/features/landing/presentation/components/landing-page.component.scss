@@ -7,8 +7,7 @@
   height: 100dvh;
   background-color: fn.token('color', 'background', 'base');
   color: fn.token('color', 'text', 'primary');
-  padding: fn.token('spacing', 'xl');
-  gap: fn.token('spacing', 'lg');
+  padding: fn.token('spacing', 'xl') fn.token('spacing', 'xl') 0 fn.token('spacing', 'xl');
 
   &__sr-live {
     @include mixins.visually-hidden;
@@ -57,7 +56,7 @@
     grid-column: 1;
     grid-row: 2;
     min-height: 0;
-    padding: 0.25rem;
+    padding: 0 fn.token('spacing', 'xxs') fn.token('spacing', 'xl') 0;
   }
 
   &__content {
@@ -68,7 +67,7 @@
     height: 100%;
     grid-column: 2;
     grid-row: 1 / -1;
-    padding: 0.25rem;
+    padding: fn.token('spacing', 'xxs');
   }
 
   &__content-title {
