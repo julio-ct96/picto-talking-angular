@@ -1,0 +1,67 @@
+{
+  "overrides": [
+    {
+      "files": ["**/*.ts"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json",
+        "sourceType": "module"
+      },
+      "plugins": ["@typescript-eslint", "@angular-eslint", "prettier"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/stylistic",
+        "plugin:@angular-eslint/recommended"
+      ],
+      "rules": {
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "prefer-const": "error",
+        "eqeqeq": ["error", "always"],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "prettier/prettier": "error"
+      }
+    },
+    {
+      "files": ["**/*.html"],
+      "parser": "@angular-eslint/template-parser",
+      "plugins": ["@angular-eslint/template", "prettier"],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended",
+        "plugin:@angular-eslint/template/accessibility"
+      ],
+      "rules": {
+        "@angular-eslint/template/attributes-order": [
+          "error",
+          {
+            "order": [
+              "TEMPLATE_REFERENCE",
+              "STRUCTURAL_DIRECTIVE",
+              "INPUT_BINDING",
+              "OUTPUT_BINDING",
+              "TWO_WAY_BINDING",
+              "ATTRIBUTE_BINDING"
+            ],
+            "alphabetical": false
+          }
+        ],
+        "prettier/prettier": "error"
+      }
+    }
+  ]
+}
