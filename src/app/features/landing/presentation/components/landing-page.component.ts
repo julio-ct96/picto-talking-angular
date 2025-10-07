@@ -29,7 +29,7 @@ export class LandingPageComponent implements OnInit {
   readonly vm = inject(LandingViewModel);
 
   ngOnInit(): void {
-    void this.vm.initialize();
+    this.vm.initialize();
   }
 
   onSelectSection(sectionId: LandingSectionId): void {
@@ -41,7 +41,7 @@ export class LandingPageComponent implements OnInit {
   }
 
   onCategoryActivate(categoryId: string): void {
-    void this.vm.activateCategory(categoryId);
+    this.vm.activateCategory(categoryId);
   }
 
   onDismissBanner(): void {
