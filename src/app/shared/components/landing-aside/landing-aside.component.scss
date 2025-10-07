@@ -36,40 +36,6 @@
     gap: fn.token('spacing', 'xxs');
   }
 
-  &__button {
-    width: 100%;
-    justify-content: flex-start;
-    text-align: start;
-    color: fn.token('color', 'text', 'primary');
-    background-color: transparent;
-    box-shadow: inset 0 0 0 2px fn.token('color', 'accent', '500');
-    transition:
-      box-shadow fn.token('transitions', 'standard') ease,
-      background-color fn.token('transitions', 'quick') ease,
-      color fn.token('transitions', 'quick') ease;
-
-    &:hover {
-      background-color: fn.token('color', 'accent', '050');
-      box-shadow: inset 0 0 0 2px fn.token('color', 'accent', '600');
-    }
-
-    &:focus-visible {
-      @include mixins.focus-ring();
-    }
-
-    &--active {
-      background-color: fn.token('color', 'accent', '500');
-      color: fn.token('color', 'text', 'inverse');
-      box-shadow: none;
-
-      &:hover {
-        background-color: fn.token('color', 'accent', '600');
-        color: fn.token('color', 'text', 'inverse');
-        box-shadow: none;
-      }
-    }
-  }
-
   &__label {
     @include mixins.text-style('md', 'medium');
   }
@@ -92,16 +58,6 @@
   @media (min-width: 1025px) {
     &--collapsed {
       display: flex;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    &__button {
-      transition: none;
-
-      &:active {
-        transform: none;
-      }
     }
   }
 }

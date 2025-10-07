@@ -14,14 +14,12 @@
     @for (section of sections(); track section.id) {
       <li class="c-landing-aside__item">
         <button
-          [class.c-landing-aside__button--active]="
-            section.id === activeSectionId()
-          "
+          [class.c-button--active]="section.id === activeSectionId()"
           [attr.aria-pressed]="section.id === activeSectionId()"
           [attr.aria-describedby]="'section-hint-' + section.id"
           (click)="onSelectSection(section.id)"
           type="button"
-          class="c-button c-button--ghost c-landing-aside__button"
+          class="c-button c-button--outlined c-button--full c-button--align-start"
         >
           <span class="c-landing-aside__label">{{ section.label }}</span>
         </button>
