@@ -44,60 +44,6 @@
     gap: fn.token('spacing', 'xl');
   }
 
-  &__menu {
-    background-color: fn.token('color', 'background', 'surface');
-    border-radius: fn.token('radius', 'lg');
-    box-shadow: fn.token('shadow', 'soft');
-    padding: fn.token('spacing', 'lg');
-    display: flex;
-    flex-direction: column;
-    gap: fn.token('spacing', 'md');
-    max-block-size: calc(100vh - fn.token('spacing', 'xl') * 2);
-    position: sticky;
-    inset-block-start: fn.token('spacing', 'xl');
-  }
-
-  &__menu-title {
-    @include mixins.text-style('lg', 'bold', 'tight');
-    color: fn.token('color', 'accent', '600');
-    margin: 0;
-  }
-
-  &__menu-list {
-    display: flex;
-    flex-direction: column;
-    gap: fn.token('spacing', 'sm');
-  }
-
-  &__menu-item {
-    display: flex;
-    flex-direction: column;
-    gap: fn.token('spacing', 'xxs');
-  }
-
-  &__menu-button {
-    width: 100%;
-    justify-content: space-between;
-    text-align: start;
-    color: fn.token('color', 'accent', '500');
-
-    &--active {
-      background-color: rgba(fn.token('color', 'accent', '500'), 0.16);
-      color: fn.token('color', 'accent', '600');
-      box-shadow: inset 0 0 0 2px rgba(fn.token('color', 'accent', '500'), 0.4);
-    }
-  }
-
-  &__menu-label {
-    @include mixins.text-style('md', 'medium');
-  }
-
-  &__menu-hint {
-    @include mixins.text-style('sm');
-    color: fn.token('color', 'text', 'muted');
-    margin: 0;
-  }
-
   &__content {
     display: flex;
     flex-direction: column;
@@ -266,24 +212,11 @@
     &__menu-toggle {
       display: inline-flex;
     }
-
-    &__menu {
-      position: static;
-      max-block-size: none;
-    }
-
-    &--menu-collapsed &__menu {
-      display: none;
-    }
   }
 
   @media (min-width: 1025px) {
     &__menu-toggle {
       display: none;
-    }
-
-    &--menu-collapsed &__menu {
-      display: flex;
     }
   }
 
@@ -309,7 +242,6 @@
   @media (prefers-reduced-motion: reduce) {
     &__category-card,
     &__banner,
-    &__menu-button,
     &__category-action {
       transition: none;
     }

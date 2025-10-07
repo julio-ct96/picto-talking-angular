@@ -72,40 +72,13 @@
     }
 
     <div class="p-landing__layout">
-      <aside
-        [class.p-landing__menu--collapsed]="state.menuCollapsed"
-        [attr.aria-label]="
-          state.locale === 'en' ? 'Landing sections' : 'Secciones de la landing'
-        "
-        id="landing-menu"
-        class="p-landing__menu"
-        role="navigation"
-      >
-        <h2 class="p-landing__menu-title">
-          {{ state.locale === 'en' ? 'Sections' : 'Secciones' }}
-        </h2>
-        <ul class="p-landing__menu-list" role="list">
-          @for (section of state.sections; track section.id) {
-            <li class="p-landing__menu-item">
-              <button
-                [class.p-landing__menu-button--active]="
-                  section.id === state.activeSectionId
-                "
-                [attr.aria-pressed]="section.id === state.activeSectionId"
-                [attr.aria-describedby]="'section-hint-' + section.id"
-                (click)="onSelectSection(section.id)"
-                type="button"
-                class="c-button c-button--ghost p-landing__menu-button"
-              >
-                <span class="p-landing__menu-label">{{ section.label }}</span>
-              </button>
-              <p id="{{ 'section-hint-' + section.id }}" class="p-landing__menu-hint">
-                {{ section.hint }}
-              </p>
-            </li>
-          }
-        </ul>
-      </aside>
+      <pic-landing-aside
+        [sections]="state.sections"
+        [locale]="state.locale"
+        [menuCollapsed]="state.menuCollapsed"
+        [activeSectionId]="state.activeSectionId"
+        (sectionSelected)="onSelectSection($event)"
+      />
 
       <section class="p-landing__content" aria-live="polite">
         <h2 class="p-landing__content-title">

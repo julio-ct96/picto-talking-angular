@@ -8,11 +8,12 @@ import { TrackMenuSectionSelectedUseCase } from '../../application/use-cases/tra
 import { ReportSpeechUnavailableUseCase } from '../../application/use-cases/report-speech-unavailable.use-case';
 import { ReportSpeechPlaybackStartedUseCase } from '../../application/use-cases/report-speech-playback-started.use-case';
 import { ReportSpeechPlaybackFailedUseCase } from '../../application/use-cases/report-speech-playback-failed.use-case';
+import { LandingAsideComponent } from '../../../../shared/components/landing-aside/landing-aside.component';
 
 @Component({
   selector: 'pic-landing-page',
   standalone: true,
-  imports: [NgOptimizedImage],
+  imports: [NgOptimizedImage, LandingAsideComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
