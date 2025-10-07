@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "lint": "ng lint"
   },
   "private": true,
@@ -21,23 +23,20 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
+    "@angular-eslint/template-parser": "^20.1.1",
     "@angular/build": "^20.1.5",
     "@angular/cli": "^20.1.5",
     "@angular/compiler-cli": "^20.1.0",
-    "@types/jasmine": "~5.1.0",
-    "jasmine-core": "~5.8.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.8.2",
-    "eslint": "^9.28.0",
+    "@types/jest": "^30.0.0",
     "angular-eslint": "20.1.1",
-    "@angular-eslint/template-parser": "^20.1.1",
-    "typescript-eslint": "^8.33.1",
-    "prettier": "3.4.2",
+    "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.1",
-    "eslint-plugin-prettier": "^5.2.6"
+    "eslint-plugin-prettier": "^5.2.6",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
+    "jest-preset-angular": "^15.0.2",
+    "prettier": "3.4.2",
+    "typescript": "~5.8.2",
+    "typescript-eslint": "^8.33.1"
   }
 }
