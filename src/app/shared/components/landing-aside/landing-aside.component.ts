@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
-import { LandingSectionView } from '../../../features/landing/presentation/view-models/landing.view-model';
-import { LandingSectionId } from '../../../features/landing/domain/value-objects/landing-section-id';
+import { LandingSectionView } from '@features/landing/presentation/view-models/landing.view-model';
+import { LandingSectionId } from '@features/landing/domain/value-objects/landing-section-id';
 
 @Component({
   selector: 'pic-landing-aside',
