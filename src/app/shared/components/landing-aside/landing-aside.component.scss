@@ -9,10 +9,8 @@
   display: flex;
   flex-direction: column;
   gap: fn.token('spacing', 'md');
-  max-block-size: calc(100vh - fn.token('spacing', 'xl') * 2);
+  height: 100%;
   overflow-y: auto;
-  position: sticky;
-  inset-block-start: fn.token('spacing', 'xl');
 
   &--collapsed {
     display: none;
@@ -47,9 +45,6 @@
   }
 
   @media (max-width: 1024px) {
-    position: static;
-    max-block-size: none;
-
     &--collapsed {
       display: none;
     }

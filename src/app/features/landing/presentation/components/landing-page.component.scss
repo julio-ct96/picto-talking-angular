@@ -4,7 +4,7 @@
 .p-landing {
   display: flex;
   flex-direction: column;
-  min-height: 100svh;
+  height: 100svh;
   background-color: fn.token('color', 'background', 'base');
   color: fn.token('color', 'text', 'primary');
   padding: fn.token('spacing', 'xl');
@@ -42,12 +42,16 @@
     display: grid;
     grid-template-columns: minmax(16rem, 20rem) 1fr;
     gap: fn.token('spacing', 'xl');
+    flex: 1;
+    min-height: 0;
   }
 
   &__content {
     display: flex;
     flex-direction: column;
     gap: fn.token('spacing', 'lg');
+    overflow-y: auto;
+    height: 100%;
   }
 
   &__content-title {
