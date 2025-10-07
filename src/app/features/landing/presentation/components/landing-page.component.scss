@@ -47,10 +47,6 @@
     transition: gap fn.token('transitions', 'standard') ease;
   }
 
-  &--menu-collapsed &__layout {
-    gap: 0;
-  }
-
   &__content {
     display: flex;
     flex-direction: column;

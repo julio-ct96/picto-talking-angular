@@ -6,9 +6,11 @@
   role="navigation"
 >
   <div class="c-landing-aside__header">
-    <h2 class="c-landing-aside__title">
-      {{ locale() === 'en' ? 'Sections' : 'Secciones' }}
-    </h2>
+    @if (!menuCollapsed()) {
+      <h2 class="c-landing-aside__title">
+        {{ locale() === 'en' ? 'Sections' : 'Secciones' }}
+      </h2>
+    }
     <button
       [attr.aria-expanded]="!menuCollapsed()"
       [attr.aria-label]="
