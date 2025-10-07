@@ -14,15 +14,16 @@
   inline-size: 100%;
   min-inline-size: 16rem;
   max-inline-size: 20rem;
-  transition: inline-size fn.token('transitions', 'standard') ease,
+  transition:
+    inline-size fn.token('transitions', 'standard') ease,
     min-inline-size fn.token('transitions', 'standard') ease,
     padding fn.token('transitions', 'standard') ease,
     opacity fn.token('transitions', 'quick') ease;
   position: relative;
 
   &--collapsed {
-    inline-size: 4rem;
-    min-inline-size: 4rem;
+    inline-size: fit-content;
+    min-inline-size: fit-content;
     padding-inline: fn.token('spacing', 'xs');
   }
 
@@ -32,6 +33,10 @@
     justify-content: space-between;
     gap: fn.token('spacing', 'sm');
     min-block-size: 2rem;
+  }
+
+  &--collapsed &__header {
+    justify-content: center;
   }
 
   &__title {
@@ -87,7 +92,9 @@
 
     &--collapsed {
       justify-content: center;
-      padding-inline: fn.token('spacing', 'xs');
+      padding: 0;
+      inline-size: 2.5rem;
+      block-size: 2.5rem;
     }
   }
 
