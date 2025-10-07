@@ -1,5 +1,8 @@
 import { LandingSectionId } from '../value-objects/landing-section-id';
-import { DEFAULT_LANDING_LOCALE, LandingLocaleCode } from '../value-objects/landing-locale';
+import {
+  DEFAULT_LANDING_LOCALE,
+  LandingLocaleCode,
+} from '../value-objects/landing-locale';
 
 export class LandingMenuSectionEntity {
   constructor(

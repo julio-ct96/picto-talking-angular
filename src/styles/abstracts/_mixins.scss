@@ -13,7 +13,9 @@
 }
 
 @mixin interactive-state($base-color, $darken-by: 6%) {
-  transition: box-shadow fn.token('transitions', 'standard') ease, background-color fn.token('transitions', 'quick') ease;
+  transition:
+    box-shadow fn.token('transitions', 'standard') ease,
+    background-color fn.token('transitions', 'quick') ease;
 
   &:hover,
   &:focus-visible {

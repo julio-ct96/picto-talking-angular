@@ -48,7 +48,14 @@ export class SpeechRequestEntity {
   }
 
   withVoice(voiceId: string | null): SpeechRequestEntity {
-    return new SpeechRequestEntity(this.text, this.locale, voiceId, this.rate, this.pitch, this.volume);
+    return new SpeechRequestEntity(
+      this.text,
+      this.locale,
+      voiceId,
+      this.rate,
+      this.pitch,
+      this.volume,
+    );
   }
 
   toSnapshot(): SpeechRequestSnapshot {

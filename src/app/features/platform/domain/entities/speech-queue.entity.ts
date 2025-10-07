@@ -11,7 +11,10 @@ export class SpeechQueueEntity {
     return new SpeechQueueEntity([...this.requests, request]);
   }
 
-  shift(): { readonly next: SpeechRequestEntity | null; readonly queue: SpeechQueueEntity } {
+  shift(): {
+    readonly next: SpeechRequestEntity | null;
+    readonly queue: SpeechQueueEntity;
+  } {
     if (this.requests.length === 0) {
       return { next: null, queue: this };
     }

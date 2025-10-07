@@ -20,23 +20,23 @@ export function providePlatformData(): EnvironmentProviders {
     FeatureFlagService,
     {
       provide: ARASAAC_REPOSITORY,
-      useExisting: ArasaacService
+      useExisting: ArasaacService,
     },
     {
       provide: SPEECH_ENGINE,
-      useExisting: SpeechSynthesisEngineService
+      useExisting: SpeechSynthesisEngineService,
     },
     {
       provide: SPEECH_PREFERENCES_PORT,
-      useExisting: SpeechPreferencesStorageService
+      useExisting: SpeechPreferencesStorageService,
     },
     {
       provide: SPEECH_TELEMETRY_PORT,
-      useExisting: ConsoleSpeechTelemetryService
+      useExisting: ConsoleSpeechTelemetryService,
     },
     {
       provide: FEATURE_FLAG_PORT,
-      useExisting: FeatureFlagService
-    }
+      useExisting: FeatureFlagService,
+    },
   ]);
 }

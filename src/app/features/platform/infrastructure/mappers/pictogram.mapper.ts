@@ -20,5 +20,5 @@ export const mapPictogramDtoToEntity = (dto: PictogramDto): PictogramEntity =>
     categories: dto.categories ?? [],
     synsets: dto.synsets ?? [],
     tags: dto.tags ?? [],
-    description: dto.desc ?? null
+    description: dto.desc ?? null,
   });

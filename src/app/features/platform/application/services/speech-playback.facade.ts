@@ -9,16 +9,25 @@ import {
 
 import { FeatureFlagPort, FEATURE_FLAG_PORT } from '../ports/feature-flag.port';
 import { SPEECH_ENGINE, SpeechEnginePort } from '../ports/speech-engine.port';
-import { SPEECH_TELEMETRY_PORT, SpeechTelemetryPort } from '../ports/speech-telemetry.port';
+import {
+  SPEECH_TELEMETRY_PORT,
+  SpeechTelemetryPort,
+} from '../ports/speech-telemetry.port';
 import { SpeechPreferencesEntity } from '../../domain/entities/speech-preferences.entity';
 import { SpeechQueueEntity } from '../../domain/entities/speech-queue.entity';
-import { SpeechRequestEntity, SpeechRequestSnapshot } from '../../domain/entities/speech-request.entity';
+import {
+  SpeechRequestEntity,
+  SpeechRequestSnapshot,
+} from '../../domain/entities/speech-request.entity';
 import { SpeechVoiceEntity } from '../../domain/entities/speech-voice.entity';
 import { LocaleCode } from '../../domain/value-objects/locale-code';
 import { SpeechPitch } from '../../domain/value-objects/speech-pitch';
 import { SpeechRate } from '../../domain/value-objects/speech-rate';
 import { SpeechVolume } from '../../domain/value-objects/speech-volume';
-import { BuildSpeechRequestUseCase, SpeechRequestOverrides } from '../use-cases/build-speech-request.use-case';
+import {
+  BuildSpeechRequestUseCase,
+  SpeechRequestOverrides,
+} from '../use-cases/build-speech-request.use-case';
 import { LoadSpeechPreferencesUseCase } from '../use-cases/load-speech-preferences.use-case';
 import { SaveSpeechPreferencesUseCase } from '../use-cases/save-speech-preferences.use-case';
 import { ListSpeechVoicesUseCase } from '../use-cases/list-speech-voices.use-case';
@@ -62,9 +71,12 @@ export class SpeechPlaybackFacade {
   private readonly listVoicesUseCase = inject(ListSpeechVoicesUseCase);
   private readonly cancelPlayback = inject(CancelSpeechPlaybackUseCase);
 
-  private readonly queue: WritableSignal<SpeechQueueEntity> = signal(SpeechQueueEntity.empty());
+  private readonly queue: WritableSignal<SpeechQueueEntity> = signal(
+    SpeechQueueEntity.empty(),
+  );
   private readonly playing: WritableSignal<boolean> = signal(false);
-  private readonly preferences: WritableSignal<SpeechPreferencesEntity | null> = signal(null);
+  private readonly preferences: WritableSignal<SpeechPreferencesEntity | null> =
+    signal(null);
   private readonly enabled: WritableSignal<boolean> = signal(
     this.featureFlags.isEnabled(SpeechPlaybackFacade.FEATURE_FLAG_KEY),
   );
@@ -96,7 +108,10 @@ export class SpeechPlaybackFacade {
   async requestSpeech(request: SpeechPlaybackRequest): Promise<void> {
     this.telemetry.trackEvent('speech.play.requested', {
       textLength: request.text.length,
-      locale: request.locale ?? this.preferences()?.locale ?? SpeechPlaybackFacade.DEFAULT_LOCALE,
+      locale:
+        request.locale ??
+        this.preferences()?.locale ??
+        SpeechPlaybackFacade.DEFAULT_LOCALE,
     });
 
     if (!this.enabled()) {
@@ -161,15 +176,21 @@ export class SpeechPlaybackFacade {
   }
 
   async setPitch(pitch: number): Promise<void> {
-    await this.updatePreferences((current) => current.withPitch(SpeechPitch.create(pitch)));
+    await this.updatePreferences((current) =>
+      current.withPitch(SpeechPitch.create(pitch)),
+    );
   }
 
   async setVolume(volume: number): Promise<void> {
-    await this.updatePreferences((current) => current.withVolume(SpeechVolume.create(volume)));
+    await this.updatePreferences((current) =>
+      current.withVolume(SpeechVolume.create(volume)),
+    );
   }
 
   async listVoices(locale?: LocaleCode): Promise<readonly SpeechVoiceEntity[]> {
-    return this.listVoicesUseCase.execute(locale ?? (await this.ensurePreferences()).locale);
+    return this.listVoicesUseCase.execute(
+      locale ?? (await this.ensurePreferences()).locale,
+    );
   }
 
   private async drainQueue(): Promise<void> {
@@ -237,7 +258,10 @@ export class SpeechPlaybackFacade {
     }
   }
 
-  private publishIssue(type: SpeechPlaybackIssue['type'], reason: SpeechPlaybackIssueReason): void {
+  private publishIssue(
+    type: SpeechPlaybackIssue['type'],
+    reason: SpeechPlaybackIssueReason,
+  ): void {
     this.issue.set({
       type,
       reason,

@@ -1,11 +1,18 @@
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import {
+  HttpTestingController,
+  provideHttpClientTesting,
+} from '@angular/common/http/testing';
 import { provideHttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { ArasaacService } from './arasaac.service';
 import { providePlatformData } from '../providers/platform.providers';
 import { ARASAAC_API_BASE_URL } from '../providers/arasaac.tokens';
-import { RateLimitExceededError, CircuitBreakerOpenError, UnknownArasaacError } from '../../domain/errors/arasaac.errors';
+import {
+  RateLimitExceededError,
+  CircuitBreakerOpenError,
+  UnknownArasaacError,
+} from '../../domain/errors/arasaac.errors';
 
 describe('ArasaacService', () => {
   let service: ArasaacService;
@@ -29,16 +36,16 @@ describe('ArasaacService', () => {
         providePlatformData(),
         {
           provide: ARASAAC_API_BASE_URL,
-          useValue: 'https://api.arasaac.org/v1'
-        }
-      ]
+          useValue: 'https://api.arasaac.org/v1',
+        },
+      ],
     });
 
     service = TestBed.inject(ArasaacService);
     httpMock = TestBed.inject(HttpTestingController);
-    delaySpy = jest.spyOn(service as unknown as { delay(ms: number): Promise<void> }, 'delay').mockImplementation(() =>
-      Promise.resolve()
-    );
+    delaySpy = jest
+      .spyOn(service as unknown as { delay(ms: number): Promise<void> }, 'delay')
+      .mockImplementation(() => Promise.resolve());
   });
 
   afterEach(() => {
@@ -65,13 +72,15 @@ describe('ArasaacService', () => {
 
   it('falls back to stale cache when the upstream request fails after TTL expiry', async () => {
     const initial = service.searchMaterials({ language: 'en', term: 'food' });
-    const firstRequest = httpMock.expectOne('https://api.arasaac.org/v1/materials/en/food');
+    const firstRequest = httpMock.expectOne(
+      'https://api.arasaac.org/v1/materials/en/food',
+    );
     firstRequest.flush([
       {
         id: 1,
         title: 'Breakfast',
-        desc: 'Morning materials'
-      }
+        desc: 'Morning materials',
+      },
     ]);
 
     const initialResult = await initial;
@@ -81,10 +90,12 @@ describe('ArasaacService', () => {
     advanceTime(15 * 60 * 1000 + 1);
 
     const secondPromise = service.searchMaterials({ language: 'en', term: 'food' });
-    const secondRequest = httpMock.expectOne('https://api.arasaac.org/v1/materials/en/food');
+    const secondRequest = httpMock.expectOne(
+      'https://api.arasaac.org/v1/materials/en/food',
+    );
     secondRequest.flush('error', {
       status: 400,
-      statusText: 'Bad Request'
+      statusText: 'Bad Request',
     });
 
     await expect(secondPromise).resolves.toStrictEqual(initialResult);
@@ -104,7 +115,9 @@ describe('ArasaacService', () => {
     await expect(attempt()).rejects.toBeInstanceOf(UnknownArasaacError);
     await expect(attempt()).rejects.toBeInstanceOf(UnknownArasaacError);
 
-    await expect(service.fetchKeywords('fr')).rejects.toBeInstanceOf(CircuitBreakerOpenError);
+    await expect(service.fetchKeywords('fr')).rejects.toBeInstanceOf(
+      CircuitBreakerOpenError,
+    );
     httpMock.expectNone('https://api.arasaac.org/v1/keywords/fr');
   });
 
@@ -116,13 +129,15 @@ describe('ArasaacService', () => {
           status: 429,
           statusText: 'Too Many Requests',
           headers: new HttpHeaders({
-            'Retry-After': '10'
+            'Retry-After': '10',
           }),
-          url: 'https://api.arasaac.org/v1/keywords/es'
-        })
+          url: 'https://api.arasaac.org/v1/keywords/es',
+        }),
       );
 
-    await expect(service.fetchKeywords('es')).rejects.toBeInstanceOf(RateLimitExceededError);
+    await expect(service.fetchKeywords('es')).rejects.toBeInstanceOf(
+      RateLimitExceededError,
+    );
     expect(httpGetSpy).toHaveBeenCalled();
     httpGetSpy.mockRestore();
   });

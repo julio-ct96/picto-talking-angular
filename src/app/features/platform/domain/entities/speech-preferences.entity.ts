@@ -41,19 +41,43 @@ export class SpeechPreferencesEntity {
   }
 
   withVoice(voiceId: string | null, locale: LocaleCode): SpeechPreferencesEntity {
-    return new SpeechPreferencesEntity(locale, voiceId, this.rate, this.pitch, this.volume);
+    return new SpeechPreferencesEntity(
+      locale,
+      voiceId,
+      this.rate,
+      this.pitch,
+      this.volume,
+    );
   }
 
   withRate(rate: SpeechRate): SpeechPreferencesEntity {
-    return new SpeechPreferencesEntity(this.locale, this.voiceId, rate, this.pitch, this.volume);
+    return new SpeechPreferencesEntity(
+      this.locale,
+      this.voiceId,
+      rate,
+      this.pitch,
+      this.volume,
+    );
   }
 
   withPitch(pitch: SpeechPitch): SpeechPreferencesEntity {
-    return new SpeechPreferencesEntity(this.locale, this.voiceId, this.rate, pitch, this.volume);
+    return new SpeechPreferencesEntity(
+      this.locale,
+      this.voiceId,
+      this.rate,
+      pitch,
+      this.volume,
+    );
   }
 
   withVolume(volume: SpeechVolume): SpeechPreferencesEntity {
-    return new SpeechPreferencesEntity(this.locale, this.voiceId, this.rate, this.pitch, volume);
+    return new SpeechPreferencesEntity(
+      this.locale,
+      this.voiceId,
+      this.rate,
+      this.pitch,
+      volume,
+    );
   }
 
   toSnapshot(): SpeechPreferencesSnapshot {

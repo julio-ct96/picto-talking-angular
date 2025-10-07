@@ -1,4 +1,7 @@
-import { LandingCategoryEntity, LandingCategorySnapshot } from './landing-category.entity';
+import {
+  LandingCategoryEntity,
+  LandingCategorySnapshot,
+} from './landing-category.entity';
 import { LandingMenuSectionEntity } from './landing-menu-section.entity';
 import { LandingSectionId } from '../value-objects/landing-section-id';
 import { LandingLocaleCode } from '../value-objects/landing-locale';

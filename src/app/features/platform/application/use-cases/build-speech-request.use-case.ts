@@ -29,11 +29,17 @@ export class BuildSpeechRequestUseCase {
 
     const voiceId = overrides?.voiceId ?? preferences.voiceId ?? null;
     const rate =
-      overrides?.rate !== undefined ? SpeechRate.create(overrides.rate) : preferences.rate;
+      overrides?.rate !== undefined
+        ? SpeechRate.create(overrides.rate)
+        : preferences.rate;
     const pitch =
-      overrides?.pitch !== undefined ? SpeechPitch.create(overrides.pitch) : preferences.pitch;
+      overrides?.pitch !== undefined
+        ? SpeechPitch.create(overrides.pitch)
+        : preferences.pitch;
     const volume =
-      overrides?.volume !== undefined ? SpeechVolume.create(overrides.volume) : preferences.volume;
+      overrides?.volume !== undefined
+        ? SpeechVolume.create(overrides.volume)
+        : preferences.volume;
 
     return SpeechRequestEntity.create({
       text: input.text,

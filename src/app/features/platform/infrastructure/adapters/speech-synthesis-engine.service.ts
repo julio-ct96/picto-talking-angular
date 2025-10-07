@@ -1,7 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 
-import { SpeechEnginePort, SpeechPlaybackResult } from '../../application/ports/speech-engine.port';
-import { SPEECH_TELEMETRY_PORT, SpeechTelemetryPort } from '../../application/ports/speech-telemetry.port';
+import {
+  SpeechEnginePort,
+  SpeechPlaybackResult,
+} from '../../application/ports/speech-engine.port';
+import {
+  SPEECH_TELEMETRY_PORT,
+  SpeechTelemetryPort,
+} from '../../application/ports/speech-telemetry.port';
 import { SpeechRequestEntity } from '../../domain/entities/speech-request.entity';
 import { SpeechVoiceEntity } from '../../domain/entities/speech-voice.entity';
 import { ARASAAC_LOCALES, LocaleCode } from '../../domain/value-objects/locale-code';
@@ -143,7 +149,9 @@ export class SpeechSynthesisEngineService implements SpeechEnginePort {
         };
 
         if (typeof synth.addEventListener === 'function' && listener) {
-          synth.addEventListener('voiceschanged', listener as EventListener, { once: true });
+          synth.addEventListener('voiceschanged', listener as EventListener, {
+            once: true,
+          });
         }
         synth.onvoiceschanged = listener as SpeechSynthesis['onvoiceschanged'];
 

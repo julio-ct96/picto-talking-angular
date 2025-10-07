@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { LandingLocalePort } from '../../application/ports/landing-locale.port';
-import { LandingLocaleCode, normalizeLandingLocale } from '../../domain/value-objects/landing-locale';
+import {
+  LandingLocaleCode,
+  normalizeLandingLocale,
+} from '../../domain/value-objects/landing-locale';
 
 @Injectable()
 export class LandingLocaleAdapter implements LandingLocalePort {

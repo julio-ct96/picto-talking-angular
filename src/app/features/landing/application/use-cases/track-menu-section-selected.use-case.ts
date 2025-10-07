@@ -1,7 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 
 import { LandingSectionId } from '../../domain/value-objects/landing-section-id';
-import { LANDING_TELEMETRY_PORT, LandingTelemetryPort } from '../ports/landing-telemetry.port';
+import {
+  LANDING_TELEMETRY_PORT,
+  LandingTelemetryPort,
+} from '../ports/landing-telemetry.port';
 
 @Injectable()
 export class TrackMenuSectionSelectedUseCase {

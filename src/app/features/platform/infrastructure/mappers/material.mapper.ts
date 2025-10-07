@@ -17,5 +17,5 @@ export const mapMaterialDtoToEntity = (dto: MaterialDto): MaterialEntity =>
     authors: dto.authors ?? [],
     files: dto.files ?? dto.file ?? null,
     screenshots: dto.screenshots ?? null,
-    translations: dto.translations ?? []
+    translations: dto.translations ?? [],
   });

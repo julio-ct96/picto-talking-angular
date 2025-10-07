@@ -3,7 +3,10 @@ import { inject, Injectable } from '@angular/core';
 import { LandingOverviewSnapshot } from '../../domain/entities/landing-overview.entity';
 import { LANDING_CONTENT_PORT, LandingContentPort } from '../ports/landing-content.port';
 import { LANDING_LOCALE_PORT, LandingLocalePort } from '../ports/landing-locale.port';
-import { LANDING_TELEMETRY_PORT, LandingTelemetryPort } from '../ports/landing-telemetry.port';
+import {
+  LANDING_TELEMETRY_PORT,
+  LandingTelemetryPort,
+} from '../ports/landing-telemetry.port';
 
 @Injectable()
 export class LoadLandingOverviewUseCase {

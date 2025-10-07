@@ -61,7 +61,11 @@
           <h2 class="p-landing__banner-title">{{ state.speechBanner.title }}</h2>
           <p class="p-landing__banner-message">{{ state.speechBanner.description }}</p>
         </div>
-        <button type="button" class="c-button c-button--ghost p-landing__banner-close" (click)="onDismissBanner()">
+        <button
+          type="button"
+          class="c-button c-button--ghost p-landing__banner-close"
+          (click)="onDismissBanner()"
+        >
           {{ state.locale === 'en' ? 'Close message' : 'Cerrar mensaje' }}
         </button>
       </section>

@@ -1,6 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 
-import { LANDING_TELEMETRY_PORT, LandingTelemetryPort } from '../ports/landing-telemetry.port';
+import {
+  LANDING_TELEMETRY_PORT,
+  LandingTelemetryPort,
+} from '../ports/landing-telemetry.port';
 
 export type SpeechUnavailableReason = 'feature-disabled' | 'engine-not-supported';
 

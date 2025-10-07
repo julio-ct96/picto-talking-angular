@@ -6,4 +6,6 @@ export interface LandingContentPort {
   loadInitialContent(): Promise<LandingOverviewEntity>;
 }
 
-export const LANDING_CONTENT_PORT = new InjectionToken<LandingContentPort>('LANDING_CONTENT_PORT');
+export const LANDING_CONTENT_PORT = new InjectionToken<LandingContentPort>(
+  'LANDING_CONTENT_PORT',
+);

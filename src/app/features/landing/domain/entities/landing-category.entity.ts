@@ -1,4 +1,7 @@
-import { DEFAULT_LANDING_LOCALE, LandingLocaleCode } from '../value-objects/landing-locale';
+import {
+  DEFAULT_LANDING_LOCALE,
+  LandingLocaleCode,
+} from '../value-objects/landing-locale';
 
 export interface LandingCategorySnapshot {
   readonly id: string;

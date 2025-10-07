@@ -76,5 +76,5 @@ export const ARASAAC_LOCALES: readonly LocaleCode[] = [
   'tr',
   'val',
   'uk',
-  'zh'
+  'zh',
 ];

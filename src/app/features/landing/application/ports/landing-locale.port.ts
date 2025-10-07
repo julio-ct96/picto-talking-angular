@@ -6,4 +6,6 @@ export interface LandingLocalePort {
   resolvePreferredLocale(): LandingLocaleCode;
 }
 
-export const LANDING_LOCALE_PORT = new InjectionToken<LandingLocalePort>('LANDING_LOCALE_PORT');
+export const LANDING_LOCALE_PORT = new InjectionToken<LandingLocalePort>(
+  'LANDING_LOCALE_PORT',
+);

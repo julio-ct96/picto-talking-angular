@@ -14,7 +14,14 @@ export interface PictogramOptions {
   readonly action?: 'future' | 'past';
   readonly resolution?: 500 | 2500;
   readonly skin?: 'white' | 'black' | 'assian' | 'mulatto' | 'aztec';
-  readonly hair?: 'blonde' | 'brown' | 'darkBrown' | 'gray' | 'darkGray' | 'red' | 'black';
+  readonly hair?:
+    | 'blonde'
+    | 'brown'
+    | 'darkBrown'
+    | 'gray'
+    | 'darkGray'
+    | 'red'
+    | 'black';
   readonly identifier?: 'classroom' | 'health' | 'library' | 'office';
   readonly identifierPosition?: 'left' | 'right';
   readonly url?: boolean;
@@ -56,10 +63,16 @@ export type NewItemsResult<TType extends NewItemType> = TType extends 'pictogram
 export interface ArasaacRepository {
   fetchKeywords(language: LocaleCode): Promise<readonly KeywordEntity[]>;
   searchPictograms(params: SearchPictogramsParams): Promise<readonly PictogramEntity[]>;
-  getPictogramDetails(params: GetPictogramDetailsParams): Promise<PictogramEntity | readonly PictogramEntity[]>;
+  getPictogramDetails(
+    params: GetPictogramDetailsParams,
+  ): Promise<PictogramEntity | readonly PictogramEntity[]>;
   searchMaterials(params: SearchMaterialsParams): Promise<readonly MaterialEntity[]>;
   getMaterialById(id: number): Promise<MaterialEntity>;
-  getNewItems<TType extends NewItemType>(params: GetNewItemsParams<TType>): Promise<NewItemsResult<TType>>;
+  getNewItems<TType extends NewItemType>(
+    params: GetNewItemsParams<TType>,
+  ): Promise<NewItemsResult<TType>>;
 }
 
-export const ARASAAC_REPOSITORY = new InjectionToken<ArasaacRepository>('ARASAAC_REPOSITORY');
+export const ARASAAC_REPOSITORY = new InjectionToken<ArasaacRepository>(
+  'ARASAAC_REPOSITORY',
+);

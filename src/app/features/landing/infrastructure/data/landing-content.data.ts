@@ -128,8 +128,7 @@ const CATEGORY_DATA: readonly CategoryData[] = [
 
 export function buildLandingSections(): readonly LandingMenuSectionEntity[] {
   return SECTION_DATA.map(
-    (section) =>
-      new LandingMenuSectionEntity(section.id, section.labels, section.hints),
+    (section) => new LandingMenuSectionEntity(section.id, section.labels, section.hints),
   );
 }
 

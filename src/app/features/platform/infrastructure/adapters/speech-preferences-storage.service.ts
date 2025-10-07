@@ -65,7 +65,10 @@ export class SpeechPreferencesStorageService implements SpeechPreferencesPort {
     };
 
     try {
-      storage.setItem(SpeechPreferencesStorageService.STORAGE_KEY, JSON.stringify(payload));
+      storage.setItem(
+        SpeechPreferencesStorageService.STORAGE_KEY,
+        JSON.stringify(payload),
+      );
     } catch (error) {
       throw new Error(
         `Unable to persist speech preferences: ${error instanceof Error ? error.message : 'unknown'}`,

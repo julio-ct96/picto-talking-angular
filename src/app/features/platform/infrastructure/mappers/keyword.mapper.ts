@@ -8,10 +8,10 @@ export const mapKeywordDtoToEntity = (dto: KeywordDto): KeywordEntity =>
     plural: dto.plural ?? null,
     meaning: dto.meaning ?? null,
     type: dto.type ?? null,
-    signLanguageId: dto.lse ?? null
+    signLanguageId: dto.lse ?? null,
   });
 
 export const mapKeywordStringToEntity = (keyword: string): KeywordEntity =>
   new KeywordEntity({
-    label: keyword
+    label: keyword,
   });

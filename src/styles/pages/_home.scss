@@ -8,7 +8,11 @@
     display: grid;
     gap: fn.token('spacing', 'xl');
     text-align: center;
-    background: linear-gradient(145deg, rgba(fn.token('color', 'accent', '050'), 0.9), rgba(fn.token('color', 'accent', '400'), 0.1));
+    background: linear-gradient(
+      145deg,
+      rgba(fn.token('color', 'accent', '050'), 0.9),
+      rgba(fn.token('color', 'accent', '400'), 0.1)
+    );
     border-radius: fn.token('radius', 'lg');
     padding: fn.token('spacing', 'xl');
     box-shadow: fn.token('shadow', 'soft');
@@ -33,4 +37,3 @@
     flex-wrap: wrap;
   }
 }
-

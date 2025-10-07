@@ -2,7 +2,9 @@ export type LandingLocaleCode = 'es' | 'en';
 
 export const DEFAULT_LANDING_LOCALE: LandingLocaleCode = 'es';
 
-export function normalizeLandingLocale(locale: string | null | undefined): LandingLocaleCode {
+export function normalizeLandingLocale(
+  locale: string | null | undefined,
+): LandingLocaleCode {
   if (!locale) {
     return DEFAULT_LANDING_LOCALE;
   }
