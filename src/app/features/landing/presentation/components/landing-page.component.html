@@ -12,23 +12,21 @@
   <h1 id="landing-title" class="p-landing__title">Pictotalking</h1>
 
   <header class="p-landing__header">
-    <button
-      [attr.aria-expanded]="!state.menuCollapsed"
-      (click)="onToggleMenu()"
-      type="button"
-      class="c-button c-button--ghost p-landing__menu-toggle"
-      aria-controls="landing-menu"
-    >
-      {{
-        state.locale === 'en'
-          ? state.menuCollapsed
+    @if (state.menuCollapsed) {
+      <button
+        [attr.aria-expanded]="!state.menuCollapsed"
+        (click)="onToggleMenu()"
+        type="button"
+        class="c-button c-button--ghost p-landing__menu-toggle"
+        aria-controls="landing-menu"
+      >
+        {{
+          state.locale === 'en'
             ? 'Open navigation menu'
-            : 'Collapse navigation menu'
-          : state.menuCollapsed
-            ? 'Abrir menú de navegación'
-            : 'Colapsar menú de navegación'
-      }}
-    </button>
+            : 'Abrir menú de navegación'
+        }}
+      </button>
+    }
   </header>
 
   @if (!state.featureEnabled) {
@@ -72,6 +70,7 @@
         [menuCollapsed]="state.menuCollapsed"
         [activeSectionId]="state.activeSectionId"
         (sectionSelected)="onSelectSection($event)"
+        (sidebarToggled)="onToggleMenu()"
       />
 
       <section class="p-landing__content" aria-live="polite">

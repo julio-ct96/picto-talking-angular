@@ -17,8 +17,13 @@ export class LandingAsideComponent {
   readonly activeSectionId = input<LandingSectionId | null>(null);
 
   readonly sectionSelected = output<LandingSectionId>();
+  readonly sidebarToggled = output<void>();
 
   onSelectSection(sectionId: LandingSectionId): void {
     this.sectionSelected.emit(sectionId);
+  }
+
+  onToggleSidebar(): void {
+    this.sidebarToggled.emit();
   }
 }

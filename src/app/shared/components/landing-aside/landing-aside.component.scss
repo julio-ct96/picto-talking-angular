@@ -10,22 +10,67 @@
   flex-direction: column;
   gap: fn.token('spacing', 'md');
   height: 100%;
-  overflow-y: auto;
+  overflow: hidden;
+  inline-size: 100%;
+  min-inline-size: 16rem;
+  max-inline-size: 20rem;
+  transition: inline-size fn.token('transitions', 'standard') ease,
+    min-inline-size fn.token('transitions', 'standard') ease,
+    padding fn.token('transitions', 'standard') ease,
+    opacity fn.token('transitions', 'quick') ease;
+  position: relative;
 
   &--collapsed {
-    display: none;
+    inline-size: 3.5rem;
+    min-inline-size: 3.5rem;
+    padding-inline: fn.token('spacing', 'xs');
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: fn.token('spacing', 'sm');
+    min-block-size: 2rem;
   }
 
   &__title {
     @include mixins.text-style('lg', 'bold', 'tight');
     color: fn.token('color', 'text', 'primary');
     margin: 0;
+    white-space: nowrap;
+    opacity: 1;
+    transition: opacity fn.token('transitions', 'quick') ease;
+  }
+
+  &--collapsed &__title {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  &__toggle {
+    flex-shrink: 0;
+  }
+
+  &__toggle-icon {
+    @include mixins.text-style('xl', 'bold');
+    line-height: 1;
+    user-select: none;
   }
 
   &__list {
     display: flex;
     flex-direction: column;
     gap: fn.token('spacing', 'sm');
+    overflow-y: auto;
+    overflow-x: hidden;
+    opacity: 1;
+    transition: opacity fn.token('transitions', 'quick') ease;
+  }
+
+  &--collapsed &__list {
+    opacity: 0;
+    visibility: hidden;
   }
 
   &__item {
@@ -36,23 +81,36 @@
 
   &__label {
     @include mixins.text-style('md', 'medium');
+    white-space: nowrap;
   }
 
   &__hint {
     @include mixins.text-style('sm');
     color: fn.token('color', 'text', 'muted');
     margin: 0;
+    white-space: nowrap;
   }
 
   @media (max-width: 1024px) {
     &--collapsed {
+      inline-size: 0;
+      min-inline-size: 0;
+      padding-inline: 0;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &__toggle {
       display: none;
     }
   }
 
-  @media (min-width: 1025px) {
-    &--collapsed {
-      display: flex;
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &__title,
+    &__list {
+      transition: none;
     }
   }
 }

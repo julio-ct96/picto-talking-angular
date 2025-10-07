@@ -40,10 +40,15 @@
 
   &__layout {
     display: grid;
-    grid-template-columns: minmax(16rem, 20rem) 1fr;
+    grid-template-columns: auto 1fr;
     gap: fn.token('spacing', 'xl');
     flex: 1;
     min-height: 0;
+    transition: gap fn.token('transitions', 'standard') ease;
+  }
+
+  &--menu-collapsed &__layout {
+    gap: 0;
   }
 
   &__content {
@@ -213,6 +218,10 @@
       grid-template-columns: 1fr;
     }
 
+    &--menu-collapsed &__layout {
+      gap: fn.token('spacing', 'xl');
+    }
+
     &__menu-toggle {
       display: inline-flex;
     }
@@ -244,6 +253,10 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    &__layout {
+      transition: none;
+    }
+
     &__category-card,
     &__banner,
     &__category-action {
