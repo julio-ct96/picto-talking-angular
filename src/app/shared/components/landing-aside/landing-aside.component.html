@@ -45,9 +45,12 @@
           type="button"
           class="c-button c-button--outlined c-button--full c-button--align-start c-landing-aside__section-button"
         >
-          <span class="c-landing-aside__section-icon" aria-hidden="true">{{
-            section.icon
-          }}</span>
+          <img
+            [src]="section.pictogramUrl"
+            class="c-landing-aside__section-icon"
+            aria-hidden="true"
+          />
+
           <span class="c-landing-aside__label">{{ section.label }}</span>
         </button>
         @if (!menuCollapsed()) {

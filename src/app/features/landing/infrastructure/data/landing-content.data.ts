@@ -7,7 +7,7 @@ interface SectionData {
   readonly id: LandingSectionId;
   readonly labels: Record<LandingLocaleCode, string>;
   readonly hints: Record<LandingLocaleCode, string>;
-  readonly icon: string;
+  readonly pictogramUrl: string;
 }
 
 interface CategoryData {
@@ -27,7 +27,7 @@ const SECTION_DATA: readonly SectionData[] = [
       es: 'Explora pictogramas organizados por temas',
       en: 'Browse pictograms organised by theme',
     },
-    icon: '🏷️',
+    pictogramUrl: 'https://static.arasaac.org/pictograms/30205/30205_300.png',
   },
   {
     id: 'favorites',
@@ -39,7 +39,7 @@ const SECTION_DATA: readonly SectionData[] = [
       es: 'Accede rápidamente a tus pictogramas guardados',
       en: 'Reach your saved pictograms right away',
     },
-    icon: '⭐',
+    pictogramUrl: 'https://static.arasaac.org/pictograms/30012/30012_300.png',
   },
   {
     id: 'phrases',
@@ -51,7 +51,7 @@ const SECTION_DATA: readonly SectionData[] = [
       es: 'Encuentra frases útiles preparadas para ti',
       en: 'Find ready-made helpful phrases',
     },
-    icon: '💬',
+    pictogramUrl: 'https://static.arasaac.org/pictograms/27768/27768_300.png',
   },
 ];
 
@@ -137,7 +137,7 @@ export function buildLandingSections(): readonly LandingMenuSectionEntity[] {
         section.id,
         section.labels,
         section.hints,
-        section.icon,
+        section.pictogramUrl,
       ),
   );
 }
