@@ -90,7 +90,7 @@ export class LandingViewModel {
   private readonly speechBanner: WritableSignal<LandingSpeechBanner | null> =
     signal(null);
   private readonly liveAnnouncement: WritableSignal<string | null> = signal(null);
-  private readonly lastSpokenCategoryId: WritableSignal<string | null> = signal(null);
+  private readonly lastSpeechRequestId: WritableSignal<string | null> = signal(null);
 
   private lastHandledIssueAt = 0;
 
@@ -149,45 +149,27 @@ export class LandingViewModel {
   }
 
   selectSection(sectionId: LandingSectionId): void {
-    if (this.activeSection() === sectionId) {
-      return;
+    const isSameSection = this.activeSection() === sectionId;
+
+    if (!isSameSection) {
+      this.activeSection.set(sectionId);
+      this.trackSectionSelected.execute(sectionId);
     }
 
-    this.activeSection.set(sectionId);
-    this.trackSectionSelected.execute(sectionId);
     this.announceActiveSection(sectionId);
-    if (this.isSmallViewport()) {
+    if (!isSameSection && this.isSmallViewport()) {
       this.menuCollapsed.set(true);
     }
+
+    this.requestSectionSpeech(sectionId);
   }
 
   async activateCategory(categoryId: string): Promise<void> {
     const category = this.categories().find((item) => item.id === categoryId);
-    if (!category) {
-      return;
-    }
 
-    this.speechFacade.clearIssue();
-    this.speechBanner.set(null);
+    if (!category) return;
 
-    const enabled = this.speechFacade.isEnabled();
-    if (!enabled) {
-      this.emitSpeechUnavailable('feature-disabled');
-      return;
-    }
-
-    if (!this.speechFacade.supportsSpeech()) {
-      this.emitSpeechUnavailable('engine-not-supported');
-      return;
-    }
-
-    this.lastSpokenCategoryId.set(categoryId);
-    this.reportSpeechStarted.execute(categoryId);
-
-    await this.speechFacade.requestSpeech({
-      text: category.speechText,
-      locale: this.locale() as LocaleCode,
-    });
+    await this.requestSpeechPlayback(category.speechText, categoryId);
   }
 
   dismissSpeechBanner(): void {
@@ -203,9 +185,8 @@ export class LandingViewModel {
   private announceActiveSection(sectionId: LandingSectionId): void {
     const locale = this.locale();
     const section = this.sections().find((item) => item.id === sectionId);
-    if (!section) {
-      return;
-    }
+
+    if (!section) return;
 
     const message =
       locale === 'en'
@@ -223,8 +204,8 @@ export class LandingViewModel {
       return;
     }
 
-    const categoryId = this.lastSpokenCategoryId() ?? 'unknown';
-    this.reportSpeechFailed.execute(categoryId, issue.reason);
+    const requestId = this.lastSpeechRequestId() ?? 'unknown';
+    this.reportSpeechFailed.execute(requestId, issue.reason);
     this.speechBanner.set(this.buildFailedBanner());
   }
 
@@ -303,5 +284,37 @@ export class LandingViewModel {
     }
 
     return globalThis.matchMedia('(max-width: 1024px)').matches;
+  }
+
+  private async requestSectionSpeech(sectionId: LandingSectionId): Promise<void> {
+    const section = this.sections().find((item) => item.id === sectionId);
+
+    if (!section) return;
+
+    await this.requestSpeechPlayback(section.label, sectionId);
+  }
+
+  private async requestSpeechPlayback(text: string, requestId: string): Promise<void> {
+    this.speechFacade.clearIssue();
+    this.speechBanner.set(null);
+
+    const enabled = this.speechFacade.isEnabled();
+    if (!enabled) {
+      this.emitSpeechUnavailable('feature-disabled');
+      return;
+    }
+
+    if (!this.speechFacade.supportsSpeech()) {
+      this.emitSpeechUnavailable('engine-not-supported');
+      return;
+    }
+
+    this.lastSpeechRequestId.set(requestId);
+    this.reportSpeechStarted.execute(requestId);
+
+    await this.speechFacade.requestSpeech({
+      text,
+      locale: this.locale() as LocaleCode,
+    });
   }
 }
