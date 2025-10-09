@@ -32,9 +32,9 @@ export class AccessibleEventTriggerDirective {
   );
 
   handleClick(event: MouseEvent): void {
-    if (!this.disableAccessibleTrigger()) {
-      this.activated.emit(event);
-    }
+    if (this.disableAccessibleTrigger()) return;
+
+    this.activated.emit(event);
   }
 
   handleKeydown(event: KeyboardEvent): void {
