@@ -94,6 +94,9 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
 
   &__categories-item {
     list-style: none;
+    &--expanded {
+      grid-column: 1 / -1;
+    }
   }
 
   &__skeleton-grid {

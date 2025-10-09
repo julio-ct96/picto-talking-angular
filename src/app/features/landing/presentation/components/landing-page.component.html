@@ -84,7 +84,12 @@
           @if (state.categories.length > 0) {
             <ul class="p-landing__categories" role="list">
               @for (category of state.categories; track category.id) {
-                <li class="p-landing__categories-item">
+                <li
+                  [class.p-landing__categories-item--expanded]="
+                    expandedCategoryId() === category.id
+                  "
+                  class="p-landing__categories-item"
+                >
                   <pic-card
                     [class.p-landing__category-card--expanded]="
                       expandedCategoryId() === category.id
