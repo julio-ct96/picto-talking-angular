@@ -74,6 +74,7 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
     grid-column: 2;
     grid-row: 1 / -1;
     padding-left: fn.token('spacing', 'xxs');
+    padding-right: fn.token('spacing', 'xs');
   }
 
   &__content-title {
