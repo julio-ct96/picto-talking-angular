@@ -1,6 +1,11 @@
 @use '../../../../../styles/abstracts/functions' as fn;
 @use '../../../../../styles/abstracts/mixins' as mixins;
 
+$title-margin-top-xl: fn.token('spacing', 'xl');
+$title-font-size-xl: fn.token('typography', 'sizes', 'display');
+$aside-padding-bottom-xl: fn.token('spacing', 'xl');
+$offset-to-align-with-bottom: fn.token('spacing', 'xxs');
+
 .p-landing {
   display: flex;
   flex-direction: column;
@@ -186,6 +191,18 @@
     &:focus-within {
       @include mixins.focus-ring();
     }
+  }
+
+  &__category-card--expanded {
+    height: calc(
+      100dvh -
+        (
+          $title-font-size-xl + $title-margin-top-xl + $aside-padding-bottom-xl +
+            $offset-to-align-with-bottom
+        )
+    );
+    //max-block-size: max(0px, calc(100% - ($title-font-size-xl + $title-margin-top-xl)));
+    //overflow: auto;
   }
 
   &__category-image {

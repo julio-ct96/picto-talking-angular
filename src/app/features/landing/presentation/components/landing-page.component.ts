@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 import { LandingViewModel } from '../view-models/landing.view-model';
@@ -29,6 +35,7 @@ import { AccessibleEventTriggerDirective } from '@shared/directives/accessible-e
 })
 export class LandingPageComponent implements OnInit {
   readonly vm = inject(LandingViewModel);
+  readonly expandedCategoryId = signal<string | null>(null);
 
   ngOnInit(): void {
     this.vm.initialize();
@@ -43,6 +50,8 @@ export class LandingPageComponent implements OnInit {
   }
 
   onCategoryActivate(categoryId: string): void {
+    const isAlreadyExpanded = this.expandedCategoryId() === categoryId;
+    this.expandedCategoryId.set(isAlreadyExpanded ? null : categoryId);
     this.vm.activateCategory(categoryId);
   }
 

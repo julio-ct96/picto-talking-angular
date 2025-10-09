@@ -87,6 +87,10 @@
                 <li class="p-landing__categories-item">
                   <article
                     class="c-card p-landing__category-card"
+                    [class.p-landing__category-card--expanded]="
+                      expandedCategoryId() === category.id
+                    "
+                    [attr.aria-expanded]="expandedCategoryId() === category.id"
                     [attr.aria-label]="
                       state.locale === 'en'
                         ? 'Play ' + category.title
