@@ -68,7 +68,7 @@
     height: 100%;
     grid-column: 2;
     grid-row: 1 / -1;
-    padding: fn.token('spacing', 'xxs');
+    padding-left: fn.token('spacing', 'xxs');
   }
 
   &__content-title {
