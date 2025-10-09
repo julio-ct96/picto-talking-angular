@@ -1,6 +1,6 @@
 <aside
   [class.c-landing-aside--collapsed]="menuCollapsed()"
-  [attr.aria-label]="locale() === 'en' ? 'Landing sections' : 'Secciones de la landing'"
+  [attr.aria-label]="navigationAriaLabel()"
   id="landing-menu"
   class="c-landing-aside"
   role="navigation"
@@ -8,27 +8,19 @@
   <div class="c-landing-aside__header">
     @if (!menuCollapsed()) {
       <h2 class="c-landing-aside__title">
-        {{ locale() === 'en' ? 'Sections' : 'Secciones' }}
+        {{ sectionTitle() }}
       </h2>
     }
     <button
-      [attr.aria-expanded]="!menuCollapsed()"
-      [attr.aria-label]="
-        locale() === 'en'
-          ? menuCollapsed()
-            ? 'Expand sidebar'
-            : 'Collapse sidebar'
-          : menuCollapsed()
-            ? 'Expandir barra lateral'
-            : 'Contraer barra lateral'
-      "
+      [attr.aria-expanded]="toggleButtonAriaExpanded()"
+      [attr.aria-label]="toggleButtonLabel()"
       (click)="onToggleSidebar()"
       type="button"
       class="c-button c-button--ghost c-button--icon c-landing-aside__toggle"
       aria-controls="landing-menu"
     >
       <span class="c-landing-aside__toggle-icon" aria-hidden="true">
-        {{ menuCollapsed() ? '›' : '‹' }}
+        {{ toggleButtonIcon() }}
       </span>
     </button>
   </div>
