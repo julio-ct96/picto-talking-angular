@@ -1,0 +1,49 @@
+@use '../../../../styles/abstracts/functions' as fn;
+@use '../../../../styles/abstracts/mixins' as mixins;
+
+.c-card {
+  display: grid;
+  gap: fn.token('spacing', 'md');
+  padding: fn.token('spacing', 'lg');
+  transition: transform fn.token('transitions', 'quick') ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-within {
+    @include mixins.focus-ring();
+  }
+
+  &__image {
+    block-size: 10rem;
+    inline-size: 100%;
+    object-fit: contain;
+    border-radius: fn.token('radius', 'md');
+    background-color: rgba(fn.token('color', 'accent', '050'), 0.9);
+    padding: fn.token('spacing', 'sm');
+  }
+
+  &__body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: fn.token('spacing', 'sm');
+  }
+
+  &__title {
+    @include mixins.text-style('lg', 'bold');
+    margin: 0;
+    color: fn.token('color', 'text', 'primary');
+  }
+
+  &__footer {
+    &--invisible {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

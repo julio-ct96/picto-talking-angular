@@ -179,53 +179,18 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
     box-shadow: fn.token('shadow', 'soft');
   }
 
-  &__category-card {
-    display: grid;
-    gap: fn.token('spacing', 'md');
-    padding: fn.token('spacing', 'lg');
-    transition: transform fn.token('transitions', 'quick') ease;
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    &:focus-within {
-      @include mixins.focus-ring();
-    }
-  }
-
   &__category-card--expanded {
-    height: calc(
-      100dvh -
-        (
-          $title-font-size-xl + $title-margin-top-xl + $aside-padding-bottom-xl +
-            $offset-to-align-with-bottom
-        )
-    );
-    //max-block-size: max(0px, calc(100% - ($title-font-size-xl + $title-margin-top-xl)));
-    //overflow: auto;
-  }
-
-  &__category-image {
-    block-size: 10rem;
-    inline-size: 100%;
-    object-fit: contain;
-    border-radius: fn.token('radius', 'md');
-    background-color: rgba(fn.token('color', 'accent', '050'), 0.9);
-    padding: fn.token('spacing', 'sm');
-  }
-
-  &__category-body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: fn.token('spacing', 'sm');
-  }
-
-  &__category-title {
-    @include mixins.text-style('lg', 'bold');
-    margin: 0;
-    color: fn.token('color', 'text', 'primary');
+    ::ng-deep {
+      .c-card {
+        height: calc(
+          100dvh -
+            (
+              $title-font-size-xl + $title-margin-top-xl + $aside-padding-bottom-xl +
+                $offset-to-align-with-bottom
+            )
+        );
+      }
+    }
   }
 
   @media (max-width: 1024px) {
@@ -280,7 +245,6 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
       transition: none;
     }
 
-    &__category-card,
     &__banner {
       transition: none;
     }

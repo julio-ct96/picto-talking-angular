@@ -85,31 +85,23 @@
             <ul class="p-landing__categories" role="list">
               @for (category of state.categories; track category.id) {
                 <li class="p-landing__categories-item">
-                  <article
-                    class="c-card p-landing__category-card"
+                  <pic-card
                     [class.p-landing__category-card--expanded]="
                       expandedCategoryId() === category.id
                     "
-                    [attr.aria-expanded]="expandedCategoryId() === category.id"
-                    [attr.aria-label]="
+                    [id]="category.id"
+                    [title]="category.title"
+                    [pictogramUrl]="category.pictogramUrl"
+                    [imageAlt]="category.imageAlt"
+                    [ariaLabel]="
                       state.locale === 'en'
                         ? 'Play ' + category.title
                         : 'Reproducir ' + category.title
                     "
-                    (pic-accessible-event-trigger)="onCategoryActivate(category.id)"
+                    [isExpanded]="expandedCategoryId() === category.id"
+                    (activate)="onCategoryActivate($event)"
                   >
-                    <img
-                      [ngSrc]="category.pictogramUrl"
-                      [attr.alt]="category.imageAlt"
-                      ngOptimizedImage
-                      width="160"
-                      height="160"
-                      class="p-landing__category-image"
-                    />
-                    <div class="p-landing__category-body">
-                      <h3 class="p-landing__category-title">{{ category.title }}</h3>
-                    </div>
-                  </article>
+                  </pic-card>
                 </li>
               }
             </ul>
