@@ -85,7 +85,21 @@
             <ul class="p-landing__categories" role="list">
               @for (category of state.categories; track category.id) {
                 <li class="p-landing__categories-item">
-                  <article class="c-card p-landing__category-card">
+                  <article
+                    class="c-card p-landing__category-card"
+                    role="button"
+                    tabindex="0"
+                    [attr.aria-label]="
+                      state.locale === 'en'
+                        ? 'Play ' + category.title
+                        : 'Reproducir ' + category.title
+                    "
+                    (click)="onCategoryActivate(category.id)"
+                    (keydown.enter)="onCategoryActivate(category.id)"
+                    (keydown.space)="
+                      $event.preventDefault(); onCategoryActivate(category.id)
+                    "
+                  >
                     <img
                       [ngSrc]="category.pictogramUrl"
                       [attr.alt]="category.imageAlt"
@@ -96,23 +110,6 @@
                     />
                     <div class="p-landing__category-body">
                       <h3 class="p-landing__category-title">{{ category.title }}</h3>
-                      <button
-                        [attr.aria-label]="
-                          state.locale === 'en'
-                            ? 'Play ' + category.title
-                            : 'Reproducir ' + category.title
-                        "
-                        (click)="onCategoryActivate(category.id)"
-                        type="button"
-                        class="c-button p-landing__category-action"
-                      >
-                        <span aria-hidden="true" class="p-landing__category-action-icon"
-                          >🔊</span
-                        >
-                        <span class="p-landing__category-action-text">
-                          {{ state.locale === 'en' ? 'Play' : 'Reproducir' }}
-                        </span>
-                      </button>
                     </div>
                   </article>
                 </li>
