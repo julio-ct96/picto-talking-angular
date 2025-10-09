@@ -52,6 +52,9 @@ export class LandingPageComponent implements OnInit {
   onCategoryActivate(categoryId: string): void {
     const isAlreadyExpanded = this.expandedCategoryId() === categoryId;
     this.expandedCategoryId.set(isAlreadyExpanded ? null : categoryId);
+
+    if (isAlreadyExpanded) return;
+
     this.vm.activateCategory(categoryId);
   }
 
