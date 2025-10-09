@@ -87,18 +87,12 @@
                 <li class="p-landing__categories-item">
                   <article
                     class="c-card p-landing__category-card"
-                    role="button"
-                    tabindex="0"
                     [attr.aria-label]="
                       state.locale === 'en'
                         ? 'Play ' + category.title
                         : 'Reproducir ' + category.title
                     "
-                    (click)="onCategoryActivate(category.id)"
-                    (keydown.enter)="onCategoryActivate(category.id)"
-                    (keydown.space)="
-                      $event.preventDefault(); onCategoryActivate(category.id)
-                    "
+                    (pic-accessible-event-trigger)="onCategoryActivate(category.id)"
                   >
                     <img
                       [ngSrc]="category.pictogramUrl"
