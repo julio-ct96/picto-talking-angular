@@ -7,7 +7,7 @@
   height: 100dvh;
   background-color: fn.token('color', 'background', 'base');
   color: fn.token('color', 'text', 'primary');
-  padding: fn.token('spacing', 'xl') fn.token('spacing', 'xl') 0 fn.token('spacing', 'xl');
+  padding: 0 fn.token('spacing', 'xl');
 
   &__sr-live {
     @include mixins.visually-hidden;
@@ -21,6 +21,7 @@
 
   &__title {
     margin: 0;
+    margin-top: fn.token('spacing', 'xl');
     display: flex;
     align-items: center;
   }
@@ -73,6 +74,7 @@
   &__content-title {
     @include mixins.text-style('xl', 'bold', 'tight');
     margin: 0;
+    margin-top: fn.token('spacing', 'xl');
   }
 
   &__categories {
