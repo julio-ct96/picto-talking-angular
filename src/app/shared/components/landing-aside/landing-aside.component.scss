@@ -93,14 +93,14 @@
     &--collapsed {
       justify-content: center;
       padding: 0;
-      inline-size: 2.5rem;
-      block-size: 2.5rem;
+      inline-size: 4.5rem;
+      block-size: 4.5rem;
     }
   }
 
   &__section-icon {
     font-size: fn.token('typography', 'sizes', 'xl');
-    max-width: 4.5rem;
+    max-width: 3.75rem;
     line-height: 1;
     flex-shrink: 0;
     display: flex;
