@@ -26,8 +26,11 @@
   }
 
   <div class="p-landing__layout">
-    <header class="p-landing__header">
-      <img width="100px" src="/assets/logo.webp" alt="Logo pictotalking" />
+    <header
+      [class.p-landing__header--aside-expanded]="state.menuCollapsed"
+      class="p-landing__header"
+    >
+      <img src="/assets/logo.webp" alt="Logo pictotalking" />
       <h1 id="landing-title" class="p-landing__title">Pictotalking</h1>
     </header>
 
