@@ -119,6 +119,11 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
     &--expanded {
       grid-column: 1 / -1;
     }
+    &--hidden {
+      display: none;
+      visibility: hidden;
+      pointer-events: none;
+    }
   }
 
   &__skeleton-grid {

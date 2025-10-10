@@ -62,6 +62,12 @@
                 [class.p-landing__categories-item--expanded]="
                   expandedCategoryId() === category.id
                 "
+                [class.p-landing__categories-item--hidden]="
+                  isFocusMode() && expandedCategoryId() !== category.id
+                "
+                [attr.aria-hidden]="
+                  isFocusMode() && expandedCategoryId() !== category.id ? 'true' : null
+                "
                 class="p-landing__categories-item"
               >
                 <pic-card

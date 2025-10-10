@@ -177,6 +177,28 @@ export class LandingViewModel {
     this.speechBanner.set(null);
   }
 
+  announceFocusModeEntry(categoryId: string): void {
+    const locale = this.locale();
+    const category = this.categories().find((item) => item.id === categoryId);
+
+    if (!category) return;
+
+    const message =
+      locale === 'en'
+        ? `Focused on ${category.title}. Other categories are now hidden. Click again to exit focus mode.`
+        : `Enfocado en ${category.title}. Otras categorías están ocultas. Haz clic de nuevo para salir del modo enfoque.`;
+    this.liveAnnouncement.set(message);
+  }
+
+  announceFocusModeExit(): void {
+    const locale = this.locale();
+    const message =
+      locale === 'en'
+        ? 'Exited focus mode. All categories are now visible.'
+        : 'Modo enfoque desactivado. Todas las categorías están visibles.';
+    this.liveAnnouncement.set(message);
+  }
+
   private applyOverviewSnapshot(snapshot: LandingOverviewSnapshot): void {
     this.sections.set(snapshot.sections);
     this.categories.set(snapshot.categories as readonly LandingCategoryView[]);

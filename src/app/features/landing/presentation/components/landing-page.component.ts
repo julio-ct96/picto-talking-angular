@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   OnInit,
   signal,
@@ -35,6 +36,7 @@ import { CardComponent } from '@shared/components/card/card.component';
 export class LandingPageComponent implements OnInit {
   readonly vm = inject(LandingViewModel);
   readonly expandedCategoryId = signal<string | null>(null);
+  readonly isFocusMode = computed(() => this.expandedCategoryId() !== null);
 
   ngOnInit(): void {
     this.vm.initialize();
@@ -52,9 +54,13 @@ export class LandingPageComponent implements OnInit {
     const isAlreadyExpanded = this.expandedCategoryId() === categoryId;
     this.expandedCategoryId.set(isAlreadyExpanded ? null : categoryId);
 
-    if (isAlreadyExpanded) return;
+    if (isAlreadyExpanded) {
+      this.vm.announceFocusModeExit();
+      return;
+    }
 
     this.vm.activateCategory(categoryId);
+    this.vm.announceFocusModeEntry(categoryId);
   }
 
   onDismissBanner(): void {
