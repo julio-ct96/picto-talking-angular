@@ -33,7 +33,7 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
       transform: scaleX(-1);
     }
 
-    &--aside-expanded {
+    &--aside-collapsed {
       img {
         position: relative;
         top: 2rem;
