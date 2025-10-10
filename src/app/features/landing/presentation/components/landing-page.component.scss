@@ -21,12 +21,34 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
   &__header {
     display: flex;
     flex-direction: column;
-    gap: fn.token('spacing', 'md');
+    align-items: center;
+    img {
+      width: 6.25rem;
+      align-self: center;
+      left: 11rem;
+      position: absolute;
+      -webkit-transform: scaleX(-1);
+      -moz-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      transform: scaleX(-1);
+    }
+
+    &--aside-collapsed {
+      img {
+        position: relative;
+        top: 2rem;
+        left: -1.25rem;
+      }
+
+      .p-landing__title {
+        display: none;
+      }
+    }
   }
 
   &__title {
     margin: 0;
-    margin-top: fn.token('spacing', 'xl');
+    margin-top: 4.5rem;
     display: flex;
     align-items: center;
   }
