@@ -128,20 +128,6 @@
     white-space: nowrap;
   }
 
-  @media (max-width: 1024px) {
-    &--collapsed {
-      inline-size: 0;
-      min-inline-size: 0;
-      padding-inline: 0;
-      opacity: 0;
-      visibility: hidden;
-    }
-
-    &__toggle {
-      display: none;
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     transition: none;
 
