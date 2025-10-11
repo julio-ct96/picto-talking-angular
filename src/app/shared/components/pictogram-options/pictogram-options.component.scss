@@ -50,7 +50,7 @@
   justify-content: center;
   gap: fn.token('spacing', 'xs');
   padding: fn.token('spacing', 'sm') fn.token('spacing', 'md');
-  border: 2px solid transparent;
+  border: 2px solid fn.token('color', 'accent', '400');
   border-radius: fn.token('radius', 'md');
   background-color: fn.token('color', 'background', 'surface');
   color: fn.token('color', 'text', 'primary');
@@ -80,31 +80,31 @@
 
   &:active:not(:disabled) {
     transform: translateY(1px);
-    background-color: fn.token('color', 'background', 'overlay');
-    border-color: fn.token('color', 'accent', '600');
   }
 
   &:disabled {
     cursor: not-allowed;
     opacity: 0.6;
-    background-color: fn.token('color', 'accent', '050');
+    background-color: fn.token('color', 'background', 'overlay');
     color: fn.token('color', 'text', 'muted');
   }
 
   &--selected {
-    background-color: fn.token('color', 'accent', '500');
-    color: fn.token('color', 'background', 'surface');
+    background-color: fn.token('color', 'accent', '050');
+    color: fn.token('color', 'text', 'primary');
     border-color: fn.token('color', 'accent', '600');
-    box-shadow: fn.token('shadow', 'soft');
+    box-shadow:
+      fn.token('shadow', 'soft'),
+      0 0 0 2px rgba(fn.token('color', 'accent', '500'), 0.2);
 
     &:hover:not(:disabled) {
-      background-color: fn.token('color', 'accent', '600');
+      background-color: fn.token('color', 'accent', '050');
       border-color: fn.token('color', 'accent', '600');
       transform: translateY(-2px);
     }
 
     &:active:not(:disabled) {
-      background-color: fn.token('color', 'accent', '600');
+      background-color: fn.token('color', 'accent', '050');
       border-color: fn.token('color', 'accent', '600');
       transform: translateY(1px);
     }
@@ -121,8 +121,8 @@
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background-color: fn.token('color', 'background', 'surface');
-  color: fn.token('color', 'accent', '500');
+  background-color: fn.token('color', 'accent', '500');
+  color: fn.token('color', 'background', 'surface');
   font-size: fn.token('typography', 'sizes', 'sm');
   font-weight: fn.token('typography', 'weights', 'bold');
   line-height: 1;
