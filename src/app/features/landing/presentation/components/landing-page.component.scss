@@ -113,6 +113,16 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
     list-style: none;
     &--expanded {
       grid-column: 1 / -1;
+      ::ng-deep {
+        .c-card {
+          display: flex;
+          flex-direction: column;
+          &__image,
+          &__body {
+            width: 10rem;
+          }
+        }
+      }
     }
     &--hidden {
       display: none;
