@@ -1,5 +1,5 @@
-@use '../../../../../styles/abstracts/functions' as fn;
-@use '../../../../../styles/abstracts/mixins' as mixins;
+@use 'styles/abstracts/functions' as fn;
+@use 'styles/abstracts/mixins' as mixins;
 
 $title-margin-top-xl: fn.token('spacing', 'xl');
 $title-font-size-xl: fn.token('typography', 'sizes', 'display');
