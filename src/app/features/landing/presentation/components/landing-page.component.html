@@ -100,7 +100,7 @@
                           : 'Elige una subcategoría de ' + category.title
                       "
                       (click)="$event.stopImmediatePropagation()"
-                      (optionSelected)="onSubcategorySelected($event)"
+                      (selectionChanged)="onSubsectionsChanged(category.id, $event)"
                       card-footer
                     />
                   }

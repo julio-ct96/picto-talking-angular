@@ -178,6 +178,23 @@ export class LandingViewModel {
     await this.requestSpeechPlayback(category.speechText, categoryId);
   }
 
+  async selectSubcategory(categoryId: string, subcategoryId: string): Promise<void> {
+    const category = this.categories().find((item) => item.id === categoryId);
+
+    if (!category?.subcategories?.length) {
+      return;
+    }
+
+    const subcategory = category.subcategories.find((item) => item.id === subcategoryId);
+
+    if (!subcategory) {
+      return;
+    }
+
+    this.announceSubcategorySelection(category.title, subcategory.label);
+    await this.requestSpeechPlayback(subcategory.label, subcategoryId);
+  }
+
   dismissSpeechBanner(): void {
     this.speechFacade.clearIssue();
     this.speechBanner.set(null);
@@ -312,6 +329,18 @@ export class LandingViewModel {
     }
 
     return globalThis.matchMedia('(max-width: 1024px)').matches;
+  }
+
+  private announceSubcategorySelection(
+    categoryTitle: string,
+    subcategoryLabel: string,
+  ): void {
+    const locale = this.locale();
+    const message =
+      locale === 'en'
+        ? `Selected ${subcategoryLabel} in ${categoryTitle}`
+        : `Seleccionaste ${subcategoryLabel} en ${categoryTitle}`;
+    this.liveAnnouncement.set(message);
   }
 
   private async requestSectionSpeech(sectionId: LandingSectionId): Promise<void> {
