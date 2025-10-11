@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  input,
-  output,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { NgOptimizedImage } from '@angular/common';
 
 import { AccessibleEventTriggerDirective } from '@shared/directives/accessible-event-trigger/accessible-event-trigger.directive';

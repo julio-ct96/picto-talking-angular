@@ -16,11 +16,16 @@ import { ReportSpeechPlaybackStartedUseCase } from '../../application/use-cases/
 import { ReportSpeechPlaybackFailedUseCase } from '../../application/use-cases/report-speech-playback-failed.use-case';
 import { LandingAsideComponent } from '@shared/components/landing-aside/landing-aside.component';
 import { CardComponent } from '@shared/components/card/card.component';
+import { PictogramOptionsComponent } from '@shared/components/pictogram-options/pictogram-options.component';
+import {
+  PictogramOptionSelectedEvent,
+  PictogramOptionsSelectionChangedEvent,
+} from '@shared/components/pictogram-options/pictogram-options.interface';
 
 @Component({
   selector: 'pic-landing-page',
   standalone: true,
-  imports: [LandingAsideComponent, CardComponent],
+  imports: [LandingAsideComponent, CardComponent, PictogramOptionsComponent],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -61,6 +66,19 @@ export class LandingPageComponent implements OnInit {
 
     this.vm.activateCategory(categoryId);
     this.vm.announceFocusModeEntry(categoryId);
+  }
+
+  onSubcategorySelected(event: PictogramOptionSelectedEvent): void {
+    console.log('Subcategory selected:', event.option);
+  }
+
+  onSubsectionsChanged(event: PictogramOptionsSelectionChangedEvent): void {
+    console.log('Selection changed:', {
+      selectedCount: event.selectedIds.length,
+      selectedOptions: event.selectedOptions,
+      lastChanged: event.lastChangedId,
+      wasSelected: event.isSelected,
+    });
   }
 
   onDismissBanner(): void {

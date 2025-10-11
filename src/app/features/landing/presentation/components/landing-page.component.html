@@ -74,6 +74,7 @@
                   [class.p-landing__category-card--expanded]="
                     expandedCategoryId() === category.id
                   "
+                  [attr.aria-expanded]="expandedCategoryId() === category.id"
                   [id]="category.id"
                   [title]="category.title"
                   [pictogramUrl]="category.pictogramUrl"
@@ -83,9 +84,26 @@
                       ? 'Play ' + category.title
                       : 'Reproducir ' + category.title
                   "
-                  [isExpanded]="expandedCategoryId() === category.id"
                   (activate)="onCategoryActivate($event)"
                 >
+                  @if (
+                    category.subcategories &&
+                    category.subcategories.length > 0 &&
+                    expandedCategoryId() === category.id
+                  ) {
+                    <pic-pictogram-options
+                      [options]="category.subcategories"
+                      [multiSelect]="true"
+                      [ariaLabel]="
+                        state.locale === 'en'
+                          ? 'Choose a subcategory of ' + category.title
+                          : 'Elige una subcategoría de ' + category.title
+                      "
+                      (click)="$event.stopImmediatePropagation()"
+                      (optionSelected)="onSubcategorySelected($event)"
+                      card-footer
+                    />
+                  }
                 </pic-card>
               </li>
             }
