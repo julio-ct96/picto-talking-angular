@@ -1,9 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
-  contentChild,
-  ElementRef,
   input,
   output,
 } from '@angular/core';
@@ -24,12 +21,8 @@ export class CardComponent {
   readonly pictogramUrl = input.required<string>();
   readonly imageAlt = input.required<string>();
   readonly ariaLabel = input.required<string>();
-  readonly isExpanded = input<boolean>(false);
 
   readonly activate = output<string>();
-
-  readonly footerContent = contentChild('[card-footer]', { read: ElementRef });
-  readonly hasFooterContent = computed(() => !!this.footerContent());
 
   onActivate(): void {
     this.activate.emit(this.id());

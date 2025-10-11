@@ -15,13 +15,18 @@
     @include mixins.focus-ring();
   }
 
-  &__image {
-    block-size: 10rem;
-    inline-size: 100%;
-    object-fit: contain;
-    border-radius: fn.token('radius', 'md');
-    background-color: rgba(fn.token('color', 'accent', '050'), 0.9);
-    padding: fn.token('spacing', 'sm');
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .c-card__image {
+      block-size: 10rem;
+      inline-size: 100%;
+      object-fit: contain;
+      border-radius: fn.token('radius', 'md');
+      background-color: rgba(fn.token('color', 'accent', '050'), 0.9);
+      padding: fn.token('spacing', 'sm');
+    }
   }
 
   &__body {

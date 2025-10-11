@@ -1,21 +1,22 @@
 <article
-  [attr.aria-expanded]="isExpanded()"
   [attr.aria-label]="ariaLabel()"
   (pic-accessible-event-trigger)="onActivate()"
   class="c-card"
 >
-  <img
-    [ngSrc]="pictogramUrl()"
-    [attr.alt]="imageAlt()"
-    width="160"
-    height="160"
-    class="c-card__image"
-  />
-  <section class="c-card__body">
+  <header class="c-card__header">
+    <img
+      [ngSrc]="pictogramUrl()"
+      [attr.alt]="imageAlt()"
+      width="160"
+      height="160"
+      class="c-card__image"
+    />
     <h3 class="c-card__title">{{ title() }}</h3>
-    <ng-content />
+  </header>
+  <section class="c-card__body">
+    <ng-content select="[card-body]" />
   </section>
-  <footer [class.c-card__footer--invisible]="!hasFooterContent()" class="c-card__footer">
+  <footer class="c-card__footer">
     <ng-content select="[card-footer]" />
   </footer>
 </article>
