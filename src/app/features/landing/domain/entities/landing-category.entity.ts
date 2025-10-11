@@ -3,12 +3,24 @@ import {
   LandingLocaleCode,
 } from '../value-objects/landing-locale';
 
+export interface SubcategoryData {
+  readonly id: string;
+  readonly titles: Record<LandingLocaleCode, string>;
+  readonly pictogramUrl: string;
+}
+
 export interface LandingCategorySnapshot {
   readonly id: string;
   readonly title: string;
   readonly pictogramUrl: string;
   readonly imageAlt: string;
   readonly speechText: string;
+  readonly subcategories?: readonly {
+    readonly id: string;
+    readonly label: string;
+    readonly pictogramUrl: string;
+    readonly imageAlt: string;
+  }[];
 }
 
 export class LandingCategoryEntity {
@@ -16,6 +28,7 @@ export class LandingCategoryEntity {
     readonly id: string,
     private readonly titleByLocale: Readonly<Record<LandingLocaleCode, string>>,
     readonly pictogramUrl: string,
+    private readonly subcategoriesData?: readonly SubcategoryData[],
   ) {}
 
   title(locale: LandingLocaleCode): string {
@@ -38,6 +51,15 @@ export class LandingCategoryEntity {
       pictogramUrl: this.pictogramUrl,
       imageAlt: this.imageAlt(locale),
       speechText: this.speechText(locale),
+      subcategories: this.subcategoriesData?.map((sub) => ({
+        id: sub.id,
+        label: sub.titles[locale] ?? sub.titles[DEFAULT_LANDING_LOCALE],
+        pictogramUrl: sub.pictogramUrl,
+        imageAlt:
+          locale === 'en'
+            ? `Subcategory ${sub.titles[locale]}`
+            : `Subcategoría ${sub.titles[locale]}`,
+      })),
     };
   }
 }

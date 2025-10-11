@@ -44,6 +44,12 @@ export interface LandingCategoryView {
   readonly pictogramUrl: string;
   readonly imageAlt: string;
   readonly speechText: string;
+  readonly subcategories?: readonly {
+    readonly id: string;
+    readonly label: string;
+    readonly pictogramUrl: string;
+    readonly imageAlt: string;
+  }[];
 }
 
 export interface LandingSpeechBanner {

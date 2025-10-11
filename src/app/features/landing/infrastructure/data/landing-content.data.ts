@@ -1,5 +1,8 @@
 import { LandingMenuSectionEntity } from '../../domain/entities/landing-menu-section.entity';
-import { LandingCategoryEntity } from '../../domain/entities/landing-category.entity';
+import {
+  LandingCategoryEntity,
+  SubcategoryData,
+} from '../../domain/entities/landing-category.entity';
 import { LandingLocaleCode } from '../../domain/value-objects/landing-locale';
 import { LandingSectionId } from '../../domain/value-objects/landing-section-id';
 
@@ -14,6 +17,7 @@ interface CategoryData {
   readonly id: string;
   readonly titles: Record<LandingLocaleCode, string>;
   readonly pictogramUrl: string;
+  readonly subcategories?: readonly SubcategoryData[];
 }
 
 const SECTION_DATA: readonly SectionData[] = [
@@ -63,6 +67,23 @@ const CATEGORY_DATA: readonly CategoryData[] = [
       en: 'Animals',
     },
     pictogramUrl: 'https://static.arasaac.org/pictograms/11220/11220_500.png',
+    subcategories: [
+      {
+        id: 'animals-pets',
+        titles: { es: 'Mascotas', en: 'Pets' },
+        pictogramUrl: 'https://static.arasaac.org/pictograms/2425/2425_300.png',
+      },
+      {
+        id: 'animals-farm',
+        titles: { es: 'Granja', en: 'Farm' },
+        pictogramUrl: 'https://static.arasaac.org/pictograms/14553/14553_300.png',
+      },
+      {
+        id: 'animals-wild',
+        titles: { es: 'Salvajes', en: 'Wild' },
+        pictogramUrl: 'https://static.arasaac.org/pictograms/4626/4626_300.png',
+      },
+    ],
   },
   {
     id: 'food',
@@ -71,6 +92,23 @@ const CATEGORY_DATA: readonly CategoryData[] = [
       en: 'Food',
     },
     pictogramUrl: 'https://static.arasaac.org/pictograms/3470/3470_500.png',
+    subcategories: [
+      {
+        id: 'food-fruits',
+        titles: { es: 'Frutas', en: 'Fruits' },
+        pictogramUrl: 'https://static.arasaac.org/pictograms/7654/7654_300.png',
+      },
+      {
+        id: 'food-vegetables',
+        titles: { es: 'Verduras', en: 'Vegetables' },
+        pictogramUrl: 'https://static.arasaac.org/pictograms/16050/16050_300.png',
+      },
+      {
+        id: 'food-drinks',
+        titles: { es: 'Bebidas', en: 'Drinks' },
+        pictogramUrl: 'https://static.arasaac.org/pictograms/2417/2417_300.png',
+      },
+    ],
   },
   {
     id: 'people',
@@ -145,6 +183,11 @@ export function buildLandingSections(): readonly LandingMenuSectionEntity[] {
 export function buildLandingCategories(): readonly LandingCategoryEntity[] {
   return CATEGORY_DATA.map(
     (category) =>
-      new LandingCategoryEntity(category.id, category.titles, category.pictogramUrl),
+      new LandingCategoryEntity(
+        category.id,
+        category.titles,
+        category.pictogramUrl,
+        category.subcategories,
+      ),
   );
 }
