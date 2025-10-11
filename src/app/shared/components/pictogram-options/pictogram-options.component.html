@@ -1,0 +1,42 @@
+@if (hasOptions()) {
+  <nav
+    [attr.aria-label]="ariaLabel()"
+    [attr.aria-multiselectable]="ariaMultiselectable()"
+    class="c-pictogram-options"
+    role="navigation"
+  >
+    <ul class="c-pictogram-options__list" role="list">
+      @for (optionViewModel of optionViewModels(); track optionViewModel.option.id) {
+        <li class="c-pictogram-options__item">
+          <button
+            [attr.aria-label]="optionViewModel.ariaLabel"
+            [attr.aria-pressed]="multiSelect() ? optionViewModel.isSelected : null"
+            [disabled]="disabled()"
+            [class.c-pictogram-options__button--selected]="
+              multiSelect() && optionViewModel.isSelected
+            "
+            (pic-accessible-event-trigger)="onSelectOption(optionViewModel.option)"
+            type="button"
+            class="c-pictogram-options__button"
+          >
+            @if (multiSelect() && optionViewModel.isSelected) {
+              <span class="c-pictogram-options__selected-indicator" aria-hidden="true">
+                ✓
+              </span>
+            }
+            <img
+              [ngSrc]="optionViewModel.option.pictogramUrl"
+              [attr.alt]="optionViewModel.option.imageAlt"
+              width="48"
+              height="48"
+              class="c-pictogram-options__image"
+            />
+            <span class="c-pictogram-options__label">{{
+              optionViewModel.option.label
+            }}</span>
+          </button>
+        </li>
+      }
+    </ul>
+  </nav>
+}
