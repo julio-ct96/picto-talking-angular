@@ -10,13 +10,13 @@ import {
 } from '../../application/ports/speech-telemetry.port';
 import { SpeechRequestEntity } from '../../domain/entities/speech-request.entity';
 import { SpeechVoiceEntity } from '../../domain/entities/speech-voice.entity';
-import { ARASAAC_LOCALES, LocaleCode } from '../../domain/value-objects/locale-code';
+import { SUPPORTED_LOCALES, LocaleCode } from '../../domain/value-objects/locale-code';
 
 @Injectable()
 export class SpeechSynthesisEngineService implements SpeechEnginePort {
   private readonly telemetry = inject<SpeechTelemetryPort>(SPEECH_TELEMETRY_PORT);
 
-  private readonly supportedLocales = new Set<LocaleCode>(ARASAAC_LOCALES);
+  private readonly supportedLocales = new Set<LocaleCode>(SUPPORTED_LOCALES);
 
   private voiceEntities: readonly SpeechVoiceEntity[] = [];
   private readonly rawVoices = new Map<string, SpeechSynthesisVoice>();

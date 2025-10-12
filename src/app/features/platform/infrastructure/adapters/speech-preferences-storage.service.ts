@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { SpeechPreferencesEntity } from '../../domain/entities/speech-preferences.entity';
-import { ARASAAC_LOCALES, LocaleCode } from '../../domain/value-objects/locale-code';
+import { SUPPORTED_LOCALES, LocaleCode } from '../../domain/value-objects/locale-code';
 import { SpeechPreferencesPort } from '../../application/ports/speech-preferences.port';
 
 type StoredSpeechPreferences = {
@@ -16,7 +16,7 @@ type StoredSpeechPreferences = {
 export class SpeechPreferencesStorageService implements SpeechPreferencesPort {
   private static readonly STORAGE_KEY = 'platform.speech.preferences';
 
-  private readonly supportedLocales = new Set<LocaleCode>(ARASAAC_LOCALES);
+  private readonly supportedLocales = new Set<LocaleCode>(SUPPORTED_LOCALES);
 
   async load(): Promise<SpeechPreferencesEntity | null> {
     const storage = this.getStorage();
