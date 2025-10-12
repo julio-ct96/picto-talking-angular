@@ -21,10 +21,6 @@ import {
 import { ReportSpeechPlaybackStartedUseCase } from '../../application/use-cases/report-speech-playback-started.use-case';
 import { ReportSpeechPlaybackFailedUseCase } from '../../application/use-cases/report-speech-playback-failed.use-case';
 import {
-  LANDING_FEATURE_FLAG_PORT,
-  LandingFeatureFlagPort,
-} from '../../application/ports/landing-feature-flag.port';
-import {
   SpeechPlaybackFacade,
   SpeechPlaybackIssue,
 } from '../../../platform/application/services/speech-playback.facade';
@@ -60,7 +56,6 @@ export interface LandingSpeechBanner {
 
 export interface LandingViewState {
   readonly loading: boolean;
-  readonly featureEnabled: boolean;
   readonly menuCollapsed: boolean;
   readonly sections: readonly LandingSectionView[];
   readonly activeSectionId: LandingSectionId;
@@ -78,13 +73,9 @@ export class LandingViewModel {
   private readonly reportSpeechStarted = inject(ReportSpeechPlaybackStartedUseCase);
   private readonly reportSpeechFailed = inject(ReportSpeechPlaybackFailedUseCase);
 
-  private readonly featureFlag = inject<LandingFeatureFlagPort>(
-    LANDING_FEATURE_FLAG_PORT,
-  );
   private readonly speechFacade = inject(SpeechPlaybackFacade);
 
   private readonly loading: WritableSignal<boolean> = signal(true);
-  private readonly featureEnabled: WritableSignal<boolean> = signal(true);
   private readonly menuCollapsed: WritableSignal<boolean> = signal(false);
   private readonly sections: WritableSignal<readonly LandingSectionView[]> = signal([]);
   private readonly categories: WritableSignal<readonly LandingCategoryView[]> = signal(
@@ -102,7 +93,6 @@ export class LandingViewModel {
 
   readonly state = computed<LandingViewState>(() => ({
     loading: this.loading(),
-    featureEnabled: this.featureEnabled(),
     menuCollapsed: this.menuCollapsed(),
     sections: this.sections(),
     activeSectionId: this.activeSection(),
@@ -125,14 +115,6 @@ export class LandingViewModel {
   }
 
   async initialize(): Promise<void> {
-    const enabled = this.featureFlag.isLandingEnabled();
-    this.featureEnabled.set(enabled);
-
-    if (!enabled) {
-      this.loading.set(false);
-      return;
-    }
-
     try {
       const { locale, snapshot } = await this.loadOverview.execute();
       this.locale.set(locale);
@@ -262,24 +244,16 @@ export class LandingViewModel {
   private buildUnavailableBanner(reason: SpeechUnavailableReason): LandingSpeechBanner {
     const locale = this.locale();
     if (locale === 'en') {
-      const description =
-        reason === 'feature-disabled'
-          ? 'Enable the voice feature in system settings or ask a coordinator for help.'
-          : 'Your device cannot play speech right now. Check your internet connection or retry later.';
       return {
         title: 'Voice not available',
-        description,
+        description: 'Your device cannot play speech right now. Check your internet connection or retry later.',
         type: 'warning',
       };
     }
 
-    const descriptionEs =
-      reason === 'feature-disabled'
-        ? 'Activa el servicio de voz en la configuración o pide ayuda a tu coordinador.'
-        : 'No podemos reproducir la voz ahora mismo. Comprueba tu conexión o inténtalo de nuevo.';
     return {
       title: 'Voz no disponible',
-      description: descriptionEs,
+      description: 'No podemos reproducir la voz ahora mismo. Comprueba tu conexión o inténtalo de nuevo.',
       type: 'warning',
     };
   }
@@ -354,12 +328,6 @@ export class LandingViewModel {
   private async requestSpeechPlayback(text: string, requestId: string): Promise<void> {
     this.speechFacade.clearIssue();
     this.speechBanner.set(null);
-
-    const enabled = this.speechFacade.isEnabled();
-    if (!enabled) {
-      this.emitSpeechUnavailable('feature-disabled');
-      return;
-    }
 
     if (!this.speechFacade.supportsSpeech()) {
       this.emitSpeechUnavailable('engine-not-supported');

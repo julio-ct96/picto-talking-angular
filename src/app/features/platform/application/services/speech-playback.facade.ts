@@ -7,7 +7,6 @@ import {
   signal,
 } from '@angular/core';
 
-import { FeatureFlagPort, FEATURE_FLAG_PORT } from '../ports/feature-flag.port';
 import { SPEECH_ENGINE, SpeechEnginePort } from '../ports/speech-engine.port';
 import {
   SPEECH_TELEMETRY_PORT,
@@ -47,7 +46,6 @@ export interface SpeechFacadeState {
 }
 
 export type SpeechPlaybackIssueReason =
-  | 'feature-disabled'
   | 'engine-not-supported'
   | 'playback-error';
 
@@ -59,10 +57,8 @@ export interface SpeechPlaybackIssue {
 
 @Injectable({ providedIn: 'root' })
 export class SpeechPlaybackFacade {
-  private static readonly FEATURE_FLAG_KEY = 'ff_speech_service';
   private static readonly DEFAULT_LOCALE: LocaleCode = 'es';
 
-  private readonly featureFlags = inject<FeatureFlagPort>(FEATURE_FLAG_PORT);
   private readonly telemetry = inject<SpeechTelemetryPort>(SPEECH_TELEMETRY_PORT);
   private readonly engine = inject<SpeechEnginePort>(SPEECH_ENGINE);
   private readonly buildSpeechRequest = inject(BuildSpeechRequestUseCase);
@@ -77,9 +73,6 @@ export class SpeechPlaybackFacade {
   private readonly playing: WritableSignal<boolean> = signal(false);
   private readonly preferences: WritableSignal<SpeechPreferencesEntity | null> =
     signal(null);
-  private readonly enabled: WritableSignal<boolean> = signal(
-    this.featureFlags.isEnabled(SpeechPlaybackFacade.FEATURE_FLAG_KEY),
-  );
   private readonly speechSupported: WritableSignal<boolean> = signal(
     this.engine.supportsSpeechSynthesis(),
   );
@@ -92,7 +85,6 @@ export class SpeechPlaybackFacade {
   );
 
   readonly isPlaying: Signal<boolean> = computed(() => this.playing());
-  readonly isEnabled: Signal<boolean> = computed(() => this.enabled());
   readonly preferencesSnapshot: Signal<SpeechPreferencesEntity | null> = computed(() =>
     this.preferences(),
   );
@@ -101,7 +93,7 @@ export class SpeechPlaybackFacade {
   readonly state: Signal<SpeechFacadeState> = computed(() => ({
     queue: this.queueSnapshot(),
     isPlaying: this.isPlaying(),
-    isEnabled: this.isEnabled(),
+    isEnabled: true,
     preferences: this.preferences(),
   }));
 
@@ -113,15 +105,6 @@ export class SpeechPlaybackFacade {
         this.preferences()?.locale ??
         SpeechPlaybackFacade.DEFAULT_LOCALE,
     });
-
-    if (!this.enabled()) {
-      this.telemetry.logWarning('speech-service-disabled', {
-        featureFlag: SpeechPlaybackFacade.FEATURE_FLAG_KEY,
-      });
-      this.publishIssue('unavailable', 'feature-disabled');
-      this.telemetry.trackEvent('speech.unavailable', { reason: 'feature-disabled' });
-      return;
-    }
 
     const supported = this.engine.supportsSpeechSynthesis();
     this.speechSupported.set(supported);
