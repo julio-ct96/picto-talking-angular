@@ -284,6 +284,7 @@ $offset-to-align-with-bottom: fn.token('spacing', 'xxs');
           justify-content: center;
           gap: fn.token('spacing', 'sm');
           align-self: stretch;
+          border-left: solid 4px fn.color-token('background', 'overlay');
         }
 
         .c-card__footer {
